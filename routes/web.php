@@ -25,20 +25,22 @@ use App\Http\Controllers\StockMaterialController;
 use App\Http\Controllers\StockMovementController;
 use Illuminate\Support\Facades\Route;
 
+//welcom view is the default view when you access the root URL of the application. It is typically used as a landing page or homepage for the application. The welcome view can contain any content you want, such as a welcome message, links to other parts of the application, or any other information you want to display to users when they first visit your site.
+//resources/view/welcome.blade.php
 Route::get('/', function () {
     return view('welcome');
 });
 
 // Auth Routes
-Route::get('login', [AuthController::class, 'create'])->name('login');
-Route::post('login', [AuthController::class, 'store']);
-Route::get('register', [AuthController::class, 'register'])->name('register');
-Route::post('register', [AuthController::class, 'registerStore']);
-Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('password.request');
-Route::post('forgot-password', [AuthController::class, 'sendReset'])->name('password.email');
-Route::get('reset-password/{token}', [AuthController::class, 'resetForm'])->name('password.reset');
-Route::post('reset-password', [AuthController::class, 'resetStore'])->name('password.store');
-Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('login', [AuthController::class, 'login'])->name('login');//a coder dans ressources/views/auth/login.blade.php
+Route::post('login', [AuthController::class, 'store']); // a ne pas toucher
+Route::get('register', [AuthController::class, 'register'])->name('register'); //a coder dans ressources/views/auth/register.blade.php
+Route::post('register', [AuthController::class, 'registerStore']);// a ne pas toucher
+Route::get('forgot-password', [AuthController::class, 'forgotPassword'])->name('password.request');// a coder dans ressources/views/auth/forgot-password.blade.php
+Route::post('forgot-password', [AuthController::class, 'sendReset'])->name('password.email');// a ne pas toucher
+Route::get('reset-password/{token}', [AuthController::class, 'resetForm'])->name('password.reset');// a coder dans ressources/views/auth/reset-password.blade.php
+Route::post('reset-password', [AuthController::class, 'resetStore'])->name('password.store');// a ne pas toucher   
+Route::post('logout', [AuthController::class, 'logout'])->name('logout');// a ne pas toucher
 
 // Dashboard
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');

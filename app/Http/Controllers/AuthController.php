@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
-    public function create()
+    public function login()
     {
         return view('auth.login');
     }
