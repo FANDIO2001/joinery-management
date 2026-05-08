@@ -1,0 +1,69 @@
+/* Couleurs personnalisées DOLLARS MENUISERIE */
+:root {
+    --dollars-blue: #1e40af;
+    --dollars-red: #dc2626;
+    --dollars-gray: #374151;
+    --dollars-blue-light: #3b82f6;
+    --dollars-red-light: #ef4444;
+    --dollars-gray-light: #6b7280;
+}
+
+.text-dollars-blue {
+    color: var(--dollars-blue);
+}
+
+.text-dollars-red {
+    color: var(--dollars-red);
+}
+
+.text-dollars-gray {
+    color: var(--dollars-gray);
+}
+
+.bg-dollars-blue {
+    background-color: var(--dollars-blue);
+}
+
+.bg-dollars-red {
+    background-color: var(--dollars-red);
+}
+
+.bg-dollars-gray {
+    background-color: var(--dollars-gray);
+}
+
+.border-dollars-blue {
+    border-color: var(--dollars-blue);
+}
+
+.border-dollars-red {
+    border-color: var(--dollars-red);
+}
+
+.border-dollars-gray {
+    border-color: var(--dollars-gray);
+}
+
+.hover\:bg-dollars-blue:hover {
+    background-color: var(--dollars-blue);
+}
+
+.hover\:bg-dollars-red:hover {
+    background-color: var(--dollars-red);
+}
+
+.hover\:bg-dollars-gray:hover {
+    background-color: var(--dollars-gray);
+}
+
+.hover\:text-dollars-blue:hover {
+    color: var(--dollars-blue);
+}
+
+.hover\:text-dollars-red:hover {
+    color: var(--dollars-red);
+}
+
+.hover\:text-dollars-gray:hover {
+    color: var(--dollars-gray);
+}

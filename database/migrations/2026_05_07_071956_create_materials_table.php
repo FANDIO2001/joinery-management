@@ -25,8 +25,7 @@ return new class extends Migration
             $table->enum('type', ['wood', 'hardware', 'finish', 'consumable', 'other'])->default('other');
             $table->timestamps();
             
-            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('set null');
-        });
+                    });
     }
 
     /**

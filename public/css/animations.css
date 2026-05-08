@@ -1,0 +1,81 @@
+/* Animations personnalisées pour DOLLARS MENUISERIE */
+
+/* Animation de fade-in */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation de slide-up */
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation de pulse */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+/* Classes d'animation */
+.animate-fade-in {
+    animation: fadeIn 1s ease-out;
+}
+
+.animate-slide-up {
+    animation: slideUp 1.2s ease-out;
+}
+
+.animate-pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+/* Effet hover amélioré */
+.hover-scale-105:hover {
+    transform: scale(1.05);
+}
+
+.hover-opacity-90:hover {
+    opacity: 0.9;
+}
+
+/* Transitions fluides */
+.transition-transform {
+    transition-property: transform;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-opacity {
+    transition-property: opacity;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.duration-300 {
+    transition-duration: 300ms;
+}
+
+/* Ombres dynamiques */
+.drop-shadow-lg {
+    text-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.drop-shadow-md {
+    text-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}

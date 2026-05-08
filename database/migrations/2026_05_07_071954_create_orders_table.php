@@ -34,7 +34,6 @@ return new class extends Migration
             $table->timestamps();
             
             $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('address_id')->references('id')->on('client_addresses')->onDelete('cascade');
             $table->foreign('created_by')->references('id')->on('users')->onDelete('restrict');
             $table->index('reference');
             $table->index('status');

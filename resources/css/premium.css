@@ -1,0 +1,255 @@
+/* DOLLARS MENUISERIE - Premium Design System */
+
+/* Palette Premium */
+:root {
+    --bleu-nuit: #1a1f2e;
+    --bleu-profond: #0f172a;
+    --blanc-casse: #f8fafc;
+    --bois-brun: #8b4513;
+    --gris-charbon: #374151;
+    --gris-clair: #f3f4f6;
+    --accent-bois: #a0522d;
+    --ombre-subtile: rgba(0, 0, 0, 0.1);
+    --ombre-profonde: rgba(0, 0, 0, 0.2);
+}
+
+/* Animations Modernes */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Classes Utilitaires Premium */
+.animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.animate-slide-in-left {
+    animation: slideInLeft 0.6s ease-out;
+}
+
+.animate-fade-in {
+    animation: fadeIn 1s ease-out;
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Typography Premium */
+.text-premium {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+}
+
+.text-premium-bold {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+/* Navbar Premium */
+.navbar-premium {
+    background: rgba(248, 250, 252, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(55, 65, 81, 0.1);
+    box-shadow: 0 1px 3px var(--ombre-subtile);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-premium.scrolled {
+    background: rgba(248, 250, 252, 0.98);
+    box-shadow: 0 2px 8px var(--ombre-subtile);
+}
+
+/* Hero Section Premium */
+.hero-premium {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../images/hero/I.jpeg') center/cover no-repeat;
+    z-index: 1;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, 
+        rgba(26, 31, 46, 0.85) 0%, 
+        rgba(15, 23, 42, 0.75) 50%, 
+        rgba(139, 69, 19, 0.65) 100%);
+    z-index: 2;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    max-width: 1200px;
+    padding: 0 2rem;
+}
+
+/* Boutons Premium */
+.btn-premium {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-premium-primary {
+    background: var(--bois-brun);
+    color: var(--blanc-casse);
+    box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
+}
+
+.btn-premium-primary:hover {
+    background: var(--accent-bois);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(139, 69, 19, 0.4);
+}
+
+.btn-premium-secondary {
+    background: transparent;
+    color: var(--blanc-casse);
+    border: 1px solid rgba(248, 250, 252, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.btn-premium-secondary:hover {
+    background: rgba(248, 250, 252, 0.1);
+    border-color: rgba(248, 250, 252, 0.5);
+    transform: translateY(-2px);
+}
+
+/* Logo Premium */
+.logo-premium {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.02em;
+    color: var(--bleu-nuit);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.logo-premium:hover {
+    color: var(--bois-brun);
+}
+
+/* Sections Aérées */
+.section-premium {
+    padding: 6rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.section-premium-compact {
+    padding: 4rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Cards Premium */
+.card-premium {
+    background: var(--blanc-casse);
+    border-radius: 16px;
+    box-shadow: 0 4px 24px var(--ombre-subtile);
+    border: 1px solid rgba(55, 65, 81, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-premium:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px var(--ombre-profonde);
+}
+
+/* Responsive Premium */
+@media (max-width: 768px) {
+    .hero-content {
+        padding: 0 1rem;
+    }
+    
+    .section-premium {
+        padding: 4rem 1rem;
+    }
+    
+    .btn-premium {
+        padding: 0.875rem 2rem;
+        font-size: 0.9rem;
+    }
+    
+    .logo-premium {
+        font-size: 1.25rem;
+    }
+}
+
+/* Apple-like Spacing */
+.space-y-6-premium > * + * {
+    margin-top: 1.5rem;
+}
+
+.space-y-8-premium > * + * {
+    margin-top: 2rem;
+}
+
+.space-y-12-premium > * + * {
+    margin-top: 3rem;
+}
+
+/* Focus Premium */
+.focus-premium:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(139, 69, 19, 0.3);
+}
