@@ -44,6 +44,18 @@ Route::post('logout', [AuthController::class, 'logout'])->name('logout');// a ne
 
 // Dashboard
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('tableau-de-bord', [DashboardController::class, 'index'])->name('dashboard.fr');
+
+// Profile Routes
+Route::prefix('profile')->name('profile.')->group(function () {
+    Route::get('/', [ProfileController::class, 'index'])->name('index');
+    Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
+    Route::put('/update', [ProfileController::class, 'update'])->name('update');
+    Route::post('/avatar', [ProfileController::class, 'updateAvatar'])->name('avatar');
+});
+
+// Dashboard SPA Routes (for JavaScript navigation)
+Route::get('/{page}', [DashboardController::class, 'index'])->where('page', '.*')->name('spa.page');
 
 // Customer Portal
 Route::prefix('customer')->name('customer.')->group(function () {
