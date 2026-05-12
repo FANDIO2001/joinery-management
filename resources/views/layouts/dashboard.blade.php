@@ -123,6 +123,7 @@
             flex-direction: column;
             overflow: hidden;
             background: var(--bg-secondary);
+            min-height: 100vh;
         }
 
         /* Professional Sidebar Brand */
@@ -610,7 +611,7 @@
             border-color: #ffffff;
         }
 
-        /* Page Content System */
+        /* Page Content System - SIMPLIFIED */
         .page-content {
             display: none;
         }
@@ -618,6 +619,8 @@
         .page-content.active {
             display: block;
         }
+
+        /* Products pages are now in their separate blade files */
 
         /* Responsive */
         @media (max-width: 1280px) {
@@ -706,6 +709,47 @@
                             Stock
                             <span class="sidebar-nav-badge">2</span>
                         </a>
+                        <a href="" class="sidebar-nav-item" data-page="products">
+                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                            </svg>
+                            Produits
+                            <span class="sidebar-nav-badge">5</span>
+                        </a>
+                        <!-- Sous-menu Produits -->
+                        <div class="sidebar-nav-submenu" id="products-submenu" style="display: none;">
+                            <a href="#" class="sidebar-nav-item sidebar-nav-subitem" data-page="products-index">
+                                <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                </svg>
+                                Liste des Produits
+                            </a>
+                            <a href="#" class="sidebar-nav-item sidebar-nav-subitem" data-page="products-create">
+                                <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                                </svg>
+                                Ajouter un Produit
+                            </a>
+                            <a href="#" class="sidebar-nav-item sidebar-nav-subitem" data-page="products-edit">
+                                <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                </svg>
+                                Modifier un Produit
+                            </a>
+                            <a href="#" class="sidebar-nav-item sidebar-nav-subitem" data-page="products-show">
+                                <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                                Voir un Produit
+                            </a>
+                        </div>
+                        <a href="#" class="sidebar-nav-item" data-page="categories">
+                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                            Catégories
+                        </a>
                         <a href="#" class="sidebar-nav-item" data-page="suppliers">
                             <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
@@ -788,145 +832,9 @@
                     </div>
                 </div>
 
-                <!-- CLIENT SECTION - Visible for client -->
-                <div class="sidebar-nav-section" id="client-section" style="display: none;">
-                    <div class="sidebar-nav-section-header" onclick="toggleSection('client-section')">
-                        <span class="sidebar-nav-section-title">👤 ESPACE CLIENT</span>
-                        <svg class="sidebar-nav-section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </div>
-                    <div class="sidebar-nav-items">
-                        <a href="#" class="sidebar-nav-item active" data-page="client-dashboard">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                            </svg>
-                            Tableau de bord
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="client-orders">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                            </svg>
-                            Mes commandes
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="client-invoices">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-                            Factures
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="client-payments">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
-                            Paiements
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="client-tracking">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path>
-                            </svg>
-                            Suivi livraison
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="client-quotations">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-                            </svg>
-                            Devis
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="client-support">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                            </svg>
-                            Support
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="client-progress">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Avancement projet
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="client-settings">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
-                            Paramètres compte
-                        </a>
-                    </div>
-                </div>
 
-                <!-- ARTISAN SECTION - Visible for artisan -->
-                <div class="sidebar-nav-section" id="artisan-section" style="display: none;">
-                    <div class="sidebar-nav-section-header" onclick="toggleSection('artisan-section')">
-                        <span class="sidebar-nav-section-title">🔧 ESPACE ARTISAN</span>
-                        <svg class="sidebar-nav-section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </div>
-                    <div class="sidebar-nav-items">
-                        <a href="#" class="sidebar-nav-item active" data-page="artisan-dashboard">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                            </svg>
-                            Mon tableau de bord
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="artisan-tasks">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                            </svg>
-                            Mes OF
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="artisan-planning">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                            </svg>
-                            Planning
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="artisan-stock">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                            </svg>
-                            Stock matières
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="artisan-quality">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Contrôle qualité
-                        </a>
-                    </div>
-                </div>
-
-                <!-- LIVREUR SECTION - Visible for livreur -->
-                <div class="sidebar-nav-section" id="livreur-section" style="display: none;">
-                    <div class="sidebar-nav-section-header" onclick="toggleSection('livreur-section')">
-                        <span class="sidebar-nav-section-title">🚚 ESPACE LIVREUR</span>
-                        <svg class="sidebar-nav-section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </div>
-                    <div class="sidebar-nav-items">
-                        <a href="#" class="sidebar-nav-item active" data-page="livreur-dashboard">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-                            </svg>
-                            Mes livraisons
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="livreur-route">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0"></path>
-                            </svg>
-                            Feuille de route
-                        </a>
-                        <a href="#" class="sidebar-nav-item" data-page="livreur-history">
-                            <svg class="sidebar-nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Historique
-                        </a>
-                    </div>
-                </div>
-            </nav>
+                
+                            </nav>
 
             <!-- User Profile Section -->
             <div class="sidebar-user">
@@ -990,7 +898,7 @@
             </div>
 
             <!-- Main Dashboard Content -->
-            <div class="p-6 overflow-y-auto">
+            <div class="p-6 overflow-y-auto flex-1">
                 <!-- Page: Dashboard -->
                 <div id="page-dashboard" class="page-content active">
                     <!-- Key Metrics Row -->
@@ -1536,6 +1444,7 @@
                                 </div>
                             </div>
 
+                            
                             <div class="card-compact">
                                 <div class="card-header">
                                     <div>
@@ -1600,22 +1509,29 @@
 
                 <!-- Production & Workshop Page -->
                 <div id="page-production" class="page-content">
-                    <div class="space-y-6">
-                        <div class="card-compact">
-                            <div class="card-header">
-                                <div>
-                                    <div class="card-title">Production & Atelier</div>
-                                    <div class="card-subtitle">Gestion des ordres de fabrication</div>
-                                </div>
-                            </div>
-                            <div class="text-center py-8 text-gray-500">
-                                <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                                </svg>
-                                <p>Module Production en cours de développement</p>
-                            </div>
-                        </div>
+                    <div class="text-center py-8 text-gray-500">
+                        <svg class="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                        </svg>
+                        <p>Module Production en cours de développement</p>
                     </div>
+                </div>
+
+                <!-- Products Pages -->
+                <div id="page-products-index" class="page-content">
+                    @include('products.index')
+                </div>
+
+                <div id="page-products-create" class="page-content">
+                    @include('products.create')
+                </div>
+
+                <div id="page-products-edit" class="page-content">
+                    @include('products.edit')
+                </div>
+
+                <div id="page-products-show" class="page-content">
+                    @include('products.show')
                 </div>
             </div>
         </main>
@@ -1632,37 +1548,74 @@
             const navItems = document.querySelectorAll('.sidebar-nav-item');
             const pages = document.querySelectorAll('.page-content');
             
-            // Function to navigate to a page
+            // Function to navigate to a page - FIXED
+            let currentNavigationPage = null;
+            let navigationTimeout = null;
+            
+            // Initialize current page properly
+            const urlParams = new URLSearchParams(window.location.search);
+            const initialPage = urlParams.get('page') || 'dashboard';
+            currentNavigationPage = initialPage;
+            
             function navigateToPage(pageId) {
-                // Hide all pages
-                pages.forEach(page => {
-                    page.classList.remove('active');
-                });
-                
-                // Show selected page
-                const targetPage = document.getElementById('page-' + pageId);
-                if (targetPage) {
-                    targetPage.classList.add('active');
+                // Prevent infinite loops
+                if (currentNavigationPage === pageId) {
+                    console.log('⚠️ Already on page:', pageId, ' - skipping navigation');
+                    return;
                 }
                 
-                // Update active state in sidebar
-                navItems.forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // Find and activate corresponding menu
-                const activeMenuItem = Array.from(navItems).find(item => {
-                    return item.getAttribute('data-page') === pageId;
-                });
-                
-                if (activeMenuItem) {
-                    activeMenuItem.classList.add('active');
+                // Clear any pending navigation
+                if (navigationTimeout) {
+                    clearTimeout(navigationTimeout);
                 }
                 
-                // Update page title
-                updatePageTitle(pageId);
+                navigationTimeout = setTimeout(() => {
+                    console.log('🎯 NAVIGATION: Navigating to page:', pageId);
+                    currentNavigationPage = pageId;
+                    
+                    // Hide all pages
+                    const pages = document.querySelectorAll('.page-content');
+                    pages.forEach(page => {
+                        page.classList.remove('active');
+                        page.style.display = 'none';
+                    });
+                    
+                    // Show selected page
+                    const targetPage = document.getElementById('page-' + pageId);
+                    
+                    if (targetPage) {
+                        targetPage.classList.add('active');
+                        targetPage.style.display = 'block';
+                        
+                        // Form visibility handled by individual views
+                    } else {
+                        console.log('❌ Page not found: page-' + pageId);
+                    }
+                    
+                    // Update active state in sidebar
+                    navItems.forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    
+                    // Find and activate corresponding menu
+                    const activeMenuItem = Array.from(navItems).find(item => {
+                        return item.getAttribute('data-page') === pageId;
+                    });
+                    
+                    if (activeMenuItem) {
+                        activeMenuItem.classList.add('active');
+                    }
+                    
+                    // Update page title
+                    updatePageTitle(pageId);
+                }, 50);
             }
             
+            // Function to show specific page
+            window.showPage = function(pageId) {
+                navigateToPage(pageId);
+            }
+
             // Function to update page title
             function updatePageTitle(pageId) {
                 const titleElement = document.querySelector('.erp-header-title');
@@ -1676,6 +1629,12 @@
                     invoices: { title: 'Facturation', subtitle: 'Devis et factures' },
                     payments: { title: 'Paiements', subtitle: 'Suivi des paiements' },
                     stock: { title: 'Gestion des Stocks', subtitle: 'Matières premières et produits finis' },
+                    products: { title: 'Gestion des Produits', subtitle: 'Catalogue et gestion des produits' },
+                    'products-index': { title: 'Liste des Produits', subtitle: 'Catalogue complet des produits' },
+                    'products-create': { title: 'Ajouter un Produit', subtitle: 'Créer un nouveau produit' },
+                    'products-edit': { title: 'Modifier un Produit', subtitle: 'Mettre à jour les informations' },
+                    'products-show': { title: 'Détails du Produit', subtitle: 'Informations complètes du produit' },
+                    categories: { title: 'Gestion des Catégories', subtitle: 'Organisation des catégories de produits' },
                     suppliers: { title: 'Fournisseurs', subtitle: 'Gestion des fournisseurs' },
                     hr: { title: 'Ressources Humaines', subtitle: 'Gestion du personnel' },
                     employees: { title: 'Employés', subtitle: 'Gestion des employés' },
@@ -1722,7 +1681,16 @@
                 item.addEventListener('click', function(e) {
                     e.preventDefault();
                     const pageId = this.getAttribute('data-page');
-                    if (pageId) {
+                    
+                    // Handle products submenu toggle
+                    if (pageId === 'products') {
+                        const submenu = document.getElementById('products-submenu');
+                        if (submenu) {
+                            submenu.style.display = submenu.style.display === 'none' ? 'block' : 'none';
+                        }
+                        // Navigate to products-index when clicking main products menu
+                        navigateToPage('products-index');
+                    } else if (pageId) {
                         navigateToPage(pageId);
                     }
                 });

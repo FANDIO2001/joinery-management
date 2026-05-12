@@ -95,7 +95,7 @@
                 <!-- Submit Button -->
                 <button 
                     type="submit" 
-                    class="w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 px-4 rounded-lg font-bold hover:from-orange-600 hover:to-orange-700 transition-all duration-200 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] border-2 border-orange-400/50"
+                    class="w-full bg-gradient-to-r from-red-500 to-red-600 text-white py-3 px-4 rounded-lg font-bold hover:from-red-600 hover:to-red-700 transition-all duration-200 shadow-2xl hover:shadow-3xl transform hover:scale-[1.03] border-2 border-red-400/60"
                 >
                     Se connecter
                 </button>

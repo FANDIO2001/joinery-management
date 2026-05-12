@@ -60,7 +60,6 @@ Route::resource('products', ProductController::class);
 Route::resource('orders', OrderController::class);
 Route::resource('quotes', QuoteController::class);
 Route::resource('invoices', InvoiceController::class)->only(['index', 'create', 'store', 'show']);
-Route::resource('production', ProductionController::class);
 Route::resource('stocks', StockController::class);
 
 // Nested Resources

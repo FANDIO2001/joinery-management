@@ -15,14 +15,10 @@
     <link href="https://fonts.bunny.net/css?family=inter:400,500,600,700" rel="stylesheet" />
     
     <!-- Styles -->
-    @if (file_exists(public_path('build/manifest.json')))
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @else
-        <script src="https://cdn.tailwindcss.com"></script>
-    @endif
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
     <link rel="stylesheet" href="{{ asset('css/colors.css') }}">
-           <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
-           <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
     
     @stack('styles')
 </head>
@@ -31,11 +27,7 @@
     @yield('content')
     
     <!-- Scripts -->
-    @if (file_exists(public_path('build/manifest.json')))
-        @vite(['resources/js/app.js'])
-    @else
-        <script src="https://cdn.tailwindcss.com"></script>
-    @endif
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/premium.js') }}" defer></script>
     
     @stack('scripts')
