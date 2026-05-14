@@ -5,12 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DOLLARS MENUISERIE MEUBLE</title>
     
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700" rel="stylesheet" />
-    
-    <!-- Styles -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Local Styles -->
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <link rel="stylesheet" href="{{ asset('css/colors.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
     <link rel="stylesheet" href="{{ asset('css/premium.css') }}">
@@ -19,12 +16,59 @@
         /* Styles personnalisés pour le design premium */
         .hero-section {
             position: relative;
-            min-height: 100vh;
+            min-height: calc(100vh - 5rem);
+            padding: 5rem 1rem 3rem;
             background: linear-gradient(135deg, rgba(139, 69, 19, 0.6), rgba(160, 82, 45, 0.5), rgba(55, 65, 81, 0.4)),
                         url('{{ asset('images/hero/I.jpeg') }}') center/cover no-repeat;
             display: flex;
             align-items: center;
             justify-content: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            max-width: 960px;
+            width: 100%;
+            padding: 2rem;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 3.5rem;
+            line-height: 1.15;
+            margin: 0 auto 1.5rem;
+            max-width: 760px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            font-size: 1.5rem;
+            line-height: 1.65;
+            margin: 0 auto 3rem;
+            max-width: 760px;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.2s;
+            animation-fill-mode: both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s;
+            animation-fill-mode: both;
         }
         
         .navbar-custom {
@@ -62,12 +106,35 @@
             letter-spacing: -0.02em;
         }
         
+        .nav-links {
+            gap: 2rem;
+        }
+        
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            justify-content: flex-end;
+        }
+        
+        #mobile-menu a {
+            text-decoration: none;
+        }
+        
+        .nav-link,
+        .btn-primary,
+        .footer-links a,
+        .hero-cta a {
+            text-decoration: none;
+        }
+        
         .nav-link {
             font-family: 'Inter', sans-serif;
             font-weight: 500;
             color: white;
             transition: all 0.3s ease;
             position: relative;
+            white-space: nowrap;
         }
         
         .nav-link:hover {
@@ -75,18 +142,11 @@
         }
         
         .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: #fbbf24;
-            transition: width 0.3s ease;
+            content: none;
         }
         
         .nav-link:hover::after {
-            width: 100%;
+            width: 0;
         }
         
         .btn-primary {
@@ -98,6 +158,7 @@
             font-weight: 500;
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+            white-space: nowrap;
         }
         
         .btn-primary:hover {
@@ -105,12 +166,208 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
         }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        .cards-grid,
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+            gap: 1.5rem;
+            align-items: stretch;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .cards-grid,
+            .project-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .cards-grid,
+            .project-grid {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+        }
+
+        /* Projects grid - 5 per row on large screens */
+        @media (min-width: 1400px) {
+            .project-grid {
+                grid-template-columns: repeat(5, minmax(0, 1fr));
+            }
+        }
+
+        /* Services section full width */
+        .services-section {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+
+        /* Projects section full width */
+        .projects-section {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+
+        .projects-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Testimonials section full width */
+        .testimonials-section {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+
+        .testimonials-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Footer section full width */
+        .footer-section {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .services-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .cards-grid > div,
+        .project-grid > div {
+            display: flex;
+            flex-direction: column;
+            min-height: 320px;
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid rgba(229, 231, 235, 0.95);
+            box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cards-grid > div:hover,
+        .project-grid > div:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+        }
+
+        .project-grid > div img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 0.5rem 0.5rem 0 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-grid > div:hover img {
+            transform: scale(1.03);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-grid > div .p-4 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+
+        .project-grid > div .p-4 .flex.justify-between.items-center {
+            margin-top: auto;
+        }
+
+        .cards-grid > div .p-8,
+        .cards-grid > div .p-4 {
+            padding: 1.5rem;
+        }
+
+        .cards-grid > div h3,
+        .project-grid > div h3 {
+            margin-bottom: 0.75rem;
+        }
+
+        .cards-grid > div p,
+        .project-grid > div p {
+            color: #4b5563;
+        }
+
+        .cards-grid > div .text-sm,
+        .project-grid > div .text-sm {
+            margin-bottom: 1.5rem;
+        }
+
+        .project-grid > div .text-lg.font-bold.text-red-600 {
+            line-height: 1.2;
+        }
+
+        .cards-grid > div .btn,
+        .project-grid > div .btn {
+            margin-top: auto;
+        }
+
+        .project-grid > div .text-lg.font-bold.text-red-600 {
+            line-height: 1.1;
+        }
+
+        .testimonial-card,
+        .bg-gray-50.p-8.rounded-xl {
+            background: rgba(248, 250, 252, 0.95);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            border-radius: 1.5rem;
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .testimonial-card:hover,
+        .bg-gray-50.p-8.rounded-xl:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+        }
         
         .hero-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             text-align: center;
             color: white;
-            max-width: 1200px;
+            max-width: 900px;
+            width: 100%;
             padding: 2rem;
+            margin: 0 auto;
         }
         
         .hero-title {
@@ -118,7 +375,8 @@
             font-weight: 700;
             font-size: 3.5rem;
             line-height: 1.2;
-            margin-bottom: 1.5rem;
+            margin: 0 auto 1.5rem;
+            max-width: 760px;
             animation: fadeInUp 1s ease-out;
         }
         
@@ -127,7 +385,8 @@
             font-weight: 300;
             font-size: 1.5rem;
             line-height: 1.6;
-            margin-bottom: 3rem;
+            margin: 0 auto 3rem;
+            max-width: 760px;
             opacity: 0.95;
             animation: fadeInUp 1s ease-out 0.2s;
             animation-fill-mode: both;
@@ -137,6 +396,7 @@
             display: flex;
             gap: 1rem;
             justify-content: center;
+            align-items: center;
             flex-wrap: wrap;
             animation: fadeInUp 1s ease-out 0.4s;
             animation-fill-mode: both;
@@ -321,7 +581,7 @@
 
 <!-- Navigation Premium -->
 <nav class="navbar-custom fixed top-0 left-0 right-0 z-50" id="navbar">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
         <div class="flex justify-between items-center h-16">
             <!-- Logo avec image -->
             <div class="logo-container">
@@ -330,29 +590,32 @@
             </div>
             
             <!-- Navigation Links -->
-            <div class="nav-links hidden md:flex items-center space-x-8">
-                <a href="#" class="nav-link">Accueil</a>
-                <a href="{{ route('shop.index') }}" class="nav-link">Boutique</a>
-                <a href="#" class="nav-link">Services</a>
-                <a href="#" class="nav-link">Réalisations</a>
-                <a href="#" class="nav-link">Contact</a>
+            <div class="hidden md:flex flex-1 justify-center">
+                <div class="nav-links flex items-center space-x-8">
+                    <a href="#" class="nav-link">Accueil</a>
+                    <a href="{{ route('shop.index') }}" class="nav-link">Boutique</a>
+                    <a href="#" class="nav-link">Services</a>
+                    <a href="#" class="nav-link">Réalisations</a>
+                    <a href="#" class="nav-link">Contact</a>
+                </div>
             </div>
             
             <!-- Auth Buttons -->
             <div class="flex items-center space-x-3">
-                @auth
-                    <a href="{{ url('/dashboard') }}" class="nav-link">
-                        Tableau de bord
-                    </a>
-                @else
-                    <a href="{{ route('login') }}" class="nav-link">
-                        Connexion
-                    </a>
-                    <a href="{{ route('register') }}" class="btn-primary">
-                        S'inscrire
-                    </a>
-                @endauth
-                
+                <div class="hidden md:flex nav-actions">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="nav-link">
+                            Tableau de bord
+                        </a>
+                    @else
+                        <a href="{{ route('login') }}" class="nav-link">
+                            Connexion
+                        </a>
+                        <a href="{{ route('register') }}" class="btn-primary">
+                            S'inscrire
+                        </a>
+                    @endauth
+                </div>
                 <!-- Mobile menu button -->
                 <button class="mobile-menu-btn md:hidden" onclick="toggleMobileMenu()">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -405,8 +668,8 @@
 </section>
 
 <!-- Features Section -->
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="services-section py-20">
+    <div class="services-container">
         <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">Nos Services</h2>
             <p class="text-xl text-gray-800 max-w-3xl mx-auto">
@@ -414,7 +677,7 @@
             </p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="cards-grid">
             <!-- Service 1 -->
             <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100 hover:shadow-xl transition-shadow">
                 <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mb-6 mx-auto">
@@ -471,8 +734,8 @@
 </section>
 
 <!-- Derniers Projets Section -->
-<section id="derniers-projets" class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="derniers-projets" class="py-20 bg-gray-50 projects-section">
+    <div class="projects-container">
         <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">Derniers Projets</h2>
             <p class="text-xl text-gray-800 max-w-3xl mx-auto">
@@ -480,18 +743,14 @@
             </p>
         </div>
         
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div class="project-grid">
             <!-- Projet 1 -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div class="h-40 bg-gradient-to-br from-blue-100 to-blue-200 flex items-center justify-center">
-                    <svg class="w-12 h-12 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
-                    </svg>
-                </div>
+                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=500&h=300&fit=crop&crop=center" alt="Table Salle à Manger" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-blue-900 mb-2">Table Salle à Manger</h3>
                     <p class="text-sm text-gray-600 mb-3">Design moderne en bois massif</p>
-                    <div class="flex justify-between items-center">
+                    <div class="flex justify-between items-center mt-auto">
                         <span class="text-lg font-bold text-red-600">280 000 FCFA</span>
                         <button class="bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition-colors text-sm">
                             Voir
@@ -502,12 +761,7 @@
             
             <!-- Projet 2 -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div class="h-40 bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center">
-                    <svg class="w-12 h-12 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 100 4h2a2 2 0 100-4h-.5a1 1 0 000-2H8a2 2 0 012-2h2a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/>
-                    </svg>
-                </div>
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=250&fit=crop&crop=center" alt="Chaise Bureau" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-blue-900 mb-2">Chaise Bureau</h3>
                     <p class="text-sm text-gray-600 mb-3">Ergonomique et élégante</p>
@@ -522,13 +776,7 @@
             
             <!-- Projet 3 -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div class="h-40 bg-gradient-to-br from-green-100 to-green-200 flex items-center justify-center">
-                    <svg class="w-12 h-12 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M3 12v3c0 1.657 3.134 3 7 3s7-1.343 7-3v-3c0 1.657-3.134 3-7 3s-7-1.343-7-3z"/>
-                        <path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z"/>
-                        <path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z"/>
-                    </svg>
-                </div>
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=250&fit=crop&crop=center" alt="Bibliothèque Murale" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-blue-900 mb-2">Bibliothèque Murale</h3>
                     <p class="text-sm text-gray-600 mb-3">Rangement sur mesure</p>
@@ -540,14 +788,10 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Projet 4 -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div class="h-40 bg-gradient-to-br from-purple-100 to-purple-200 flex items-center justify-center">
-                    <svg class="w-12 h-12 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM7 7a1 1 0 000 2h6a1 1 0 100-2H7zM7 11a1 1 0 000 2h6a1 1 0 100-2H7zM7 15a1 1 0 000 2h6a1 1 0 100-2H7z"/>
-                    </svg>
-                </div>
+                <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=250&fit=crop&crop=center" alt="Cuisine Complète" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-blue-900 mb-2">Cuisine Complète</h3>
                     <p class="text-sm text-gray-600 mb-3">Aménagement moderne</p>
@@ -559,14 +803,10 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Projet 5 -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div class="h-40 bg-gradient-to-br from-red-100 to-red-200 flex items-center justify-center">
-                    <svg class="w-12 h-12 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
-                    </svg>
-                </div>
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=250&fit=crop&crop=center" alt="Meuble TV" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-blue-900 mb-2">Meuble TV</h3>
                     <p class="text-sm text-gray-600 mb-3">Design contemporain</p>
@@ -578,15 +818,10 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Projet 6 -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div class="h-40 bg-gradient-to-br from-indigo-100 to-indigo-200 flex items-center justify-center">
-                    <svg class="w-12 h-12 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 100 4h2a2 2 0 100-4h-.5a1 1 0 000-2H8a2 2 0 012-2h2a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/>
-                    </svg>
-                </div>
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=250&fit=crop&crop=center" alt="Table Chevet" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-blue-900 mb-2">Table Chevet</h3>
                     <p class="text-sm text-gray-600 mb-3">Élégant et pratique</p>
@@ -598,16 +833,10 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Projet 7 -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div class="h-40 bg-gradient-to-br from-pink-100 to-pink-200 flex items-center justify-center">
-                    <svg class="w-12 h-12 text-pink-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M3 12v3c0 1.657 3.134 3 7 3s7-1.343 7-3v-3c0 1.657-3.134 3-7 3s-7-1.343-7-3z"/>
-                        <path d="M3 7v3c0 1.657 3.134 3 7 3s7-1.343 7-3V7c0 1.657-3.134 3-7 3S3 8.657 3 7z"/>
-                        <path d="M17 5c0 1.657-3.134 3-7 3S3 6.657 3 5s3.134-3 7-3 7 1.343 7 3z"/>
-                    </svg>
-                </div>
+                <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=250&fit=crop&crop=center" alt="Commode Moderne" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-blue-900 mb-2">Commode Moderne</h3>
                     <p class="text-sm text-gray-600 mb-3">3 tiroirs avec poignées</p>
@@ -619,14 +848,10 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Projet 8 -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div class="h-40 bg-gradient-to-br from-yellow-100 to-yellow-200 flex items-center justify-center">
-                    <svg class="w-12 h-12 text-yellow-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM7 7a1 1 0 000 2h6a1 1 0 100-2H7zM7 11a1 1 0 000 2h6a1 1 0 100-2H7zM7 15a1 1 0 000 2h6a1 1 0 100-2H7z"/>
-                    </svg>
-                </div>
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=250&fit=crop&crop=center" alt="Porte Coulissante" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-blue-900 mb-2">Porte Coulissante</h3>
                     <p class="text-sm text-gray-600 mb-3">Sur mesure avec rail</p>
@@ -638,14 +863,10 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Projet 9 -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div class="h-40 bg-gradient-to-br from-teal-100 to-teal-200 flex items-center justify-center">
-                    <svg class="w-12 h-12 text-teal-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/>
-                    </svg>
-                </div>
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=250&fit=crop&crop=center" alt="Escalier Bois" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-blue-900 mb-2">Escalier Bois</h3>
                     <p class="text-sm text-gray-600 mb-3">Contemporain et sécurisé</p>
@@ -657,15 +878,10 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Projet 10 -->
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                <div class="h-40 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
-                    <svg class="w-12 h-12 text-gray-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-                        <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 1 1 0 000 2H6a2 2 0 100 4h2a2 2 0 100-4h-.5a1 1 0 000-2H8a2 2 0 012-2h2a2 2 0 012 2v9a2 2 0 01-2 2H6a2 2 0 01-2-2V5z" clip-rule="evenodd"/>
-                    </svg>
-                </div>
+                <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=250&fit=crop&crop=center" alt="Dressing Chambre" class="w-full h-40 object-cover">
                 <div class="p-4">
                     <h3 class="text-lg font-bold text-blue-900 mb-2">Dressing Chambre</h3>
                     <p class="text-sm text-gray-600 mb-3">Rangement optimisé</p>
@@ -682,8 +898,8 @@
 </section>
 
 <!-- Témoignages Section -->
-<section class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="py-20 bg-white testimonials-section">
+    <div class="testimonials-container">
         <div class="text-center mb-16">
             <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">Témoignages Clients</h2>
             <p class="text-xl text-gray-800 max-w-3xl mx-auto">
@@ -795,9 +1011,9 @@
 </section>
 
 <!-- Footer -->
-<footer id="contact" class="bg-gray-900 text-white py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+<footer id="contact" class="bg-gray-900 text-white py-12 footer-section">
+    <div class="footer-container">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <!-- Logo et Description -->
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center mb-4">
@@ -895,13 +1111,21 @@
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
+            const targetSelector = this.getAttribute('href');
+            const target = document.querySelector(targetSelector);
+            if (!target) {
+                return;
+            }
+
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
             }
         });
     });

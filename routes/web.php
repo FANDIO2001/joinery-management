@@ -15,6 +15,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductionCalendarController;
 use App\Http\Controllers\ProductionController;
 use App\Http\Controllers\ProductionTaskController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\SettingsController;
@@ -53,9 +54,6 @@ Route::prefix('profile')->name('profile.')->group(function () {
     Route::put('/update', [ProfileController::class, 'update'])->name('update');
     Route::post('/avatar', [ProfileController::class, 'updateAvatar'])->name('avatar');
 });
-
-// Dashboard SPA Routes (for JavaScript navigation)
-Route::get('/{page}', [DashboardController::class, 'index'])->where('page', '.*')->name('spa.page');
 
 // Customer Portal
 Route::prefix('customer')->name('customer.')->group(function () {

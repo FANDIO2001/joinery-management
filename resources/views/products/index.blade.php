@@ -1,3 +1,5 @@
+@extends('layouts.dashboard')
+
 @section('content')
 <div id="products-index">
     <div style="padding:24px; max-width:1400px; margin:0 auto;">
@@ -15,17 +17,17 @@
                     Gérer le catalogue de produits
                 </p>
             </div>
-            <button onclick="showPage('products-create')"
+            <a href="/products/create"
                 style="display:flex; align-items:center; gap:8px;
                        padding:12px 20px; background:linear-gradient(135deg, #10b981, #059669);
                        color:white; border:none; border-radius:8px;
                        font-size:14px; font-weight:500; cursor:pointer;
                        box-shadow:0 4px 12px rgba(16,185,129,0.3);
-                       transition:all 0.2s;"
+                       transition:all 0.2s; text-decoration:none;"
                 onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)'"
                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)'">
                 ➕ Ajouter un Produit
-            </button>
+            </a>
         </div>
 
         <!-- Search and Filters -->
@@ -136,18 +138,18 @@
                         </span>
                     </div>
                     <div style="display:flex; gap:8px;">
-                        <button onclick="showPage('products-show')"
-                            style="padding:6px 12px; background:#3b82f6; color:white; border:none; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; transition:all 0.2s;"
+                        <a href="/products/1"
+                            style="padding:6px 12px; background:#3b82f6; color:white; border:none; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; transition:all 0.2s; text-decoration:none;"
                             onmouseover="this.style.backgroundColor='#2563eb'"
                             onmouseout="this.style.backgroundColor='#3b82f6'">
                             👁️ Voir
-                        </button>
-                        <button onclick="showPage('products-edit')"
-                            style="padding:6px 12px; background:#10b981; color:white; border:none; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; transition:all 0.2s;"
+                        </a>
+                        <a href="/products/1/edit"
+                            style="padding:6px 12px; background:#10b981; color:white; border:none; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; transition:all 0.2s; text-decoration:none;"
                             onmouseover="this.style.backgroundColor='#059669'"
                             onmouseout="this.style.backgroundColor='#10b981'">
                             ✏️ Modifier
-                        </button>
+                        </a>
                         <button
                             style="padding:6px 12px; background:#ef4444; color:white; border:none; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; transition:all 0.2s;"
                             onmouseover="this.style.backgroundColor='#dc2626'"
@@ -186,18 +188,18 @@
                         </span>
                     </div>
                     <div style="display:flex; gap:8px;">
-                        <button onclick="showPage('products-show')"
-                            style="padding:6px 12px; background:#3b82f6; color:white; border:none; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; transition:all 0.2s;"
+                        <a href="/products/1"
+                            style="padding:6px 12px; background:#3b82f6; color:white; border:none; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; transition:all 0.2s; text-decoration:none;"
                             onmouseover="this.style.backgroundColor='#2563eb'"
                             onmouseout="this.style.backgroundColor='#3b82f6'">
                             👁️ Voir
-                        </button>
-                        <button onclick="showPage('products-edit')"
-                            style="padding:6px 12px; background:#10b981; color:white; border:none; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; transition:all 0.2s;"
+                        </a>
+                        <a href="/products/1/edit"
+                            style="padding:6px 12px; background:#10b981; color:white; border:none; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; transition:all 0.2s; text-decoration:none;"
                             onmouseover="this.style.backgroundColor='#059669'"
                             onmouseout="this.style.backgroundColor='#10b981'">
                             ✏️ Modifier
-                        </button>
+                        </a>
                         <button
                             style="padding:6px 12px; background:#ef4444; color:white; border:none; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; transition:all 0.2s;"
                             onmouseover="this.style.backgroundColor='#dc2626'"

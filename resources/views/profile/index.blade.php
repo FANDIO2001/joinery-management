@@ -73,7 +73,7 @@
                             Téléphone
                         </h4>
                         <p style="font-size:16px; color:#1f2937; margin:0;">
-                            +33 6 12 34 56 78
+                            +237 6 70 83 53 55
                         </p>
                     </div>
                     <div>

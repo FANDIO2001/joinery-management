@@ -1,3 +1,5 @@
+@extends('layouts.dashboard')
+
 @section('content')
 <div id="products-edit">
     <div style="padding:24px; max-width:800px; margin:0 auto;">
@@ -14,19 +16,22 @@
                     Mettre à jour les informations du produit
                 </p>
             </div>
-            <button onclick="showPage('products-index')"
+            <a href="{{ route('products.index') }}"
                 style="display:flex; align-items:center; gap:8px;
                        padding:10px 18px; background:#6b7280;
                        color:white; border:none; border-radius:8px;
-                       font-size:14px; font-weight:500; cursor:pointer;">
+                       font-size:14px; font-weight:500; cursor:pointer; text-decoration:none;">
                 ← Retour
-            </button>
+            </a>
         </div>
 
         <!-- Formulaire -->
         <div style="background:white; border-radius:12px;
                     box-shadow:0 4px 20px rgba(0,0,0,0.08);
                     border:1px solid #e5e7eb; padding:32px;">
+            <form action="{{ route('products.update', 1) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
 
             <!-- Nom du produit -->
             <div style="margin-bottom:20px;">
@@ -200,14 +205,14 @@
             <!-- Boutons -->
             <div style="display:flex; gap:15px; padding-top:24px;
                         border-top:1px solid #e5e7eb; justify-content:flex-end;">
-                <button onclick="showPage('products-index')"
-                    style="padding:12px 28px; background:#6b7280;
+                <a href="{{ route('products.index') }}"
+                    style="display:inline-flex; align-items:center; justify-content:center;
+                           padding:12px 28px; background:#6b7280;
                            color:white; border:none; border-radius:8px;
-                           font-size:15px; font-weight:600; cursor:pointer;">
+                           font-size:15px; font-weight:600; cursor:pointer; text-decoration:none;">
                     Annuler
-                </button>
-                <button type="button"
-                    onclick="alert('Modification enregistrée - À connecter avec Laravel')"
+                </a>
+                <button type="submit"
                     style="padding:12px 28px;
                            background:linear-gradient(135deg, #10b981, #059669);
                            color:white; border:none; border-radius:8px;
@@ -216,6 +221,7 @@
                     💾 Enregistrer les modifications
                 </button>
             </div>
+            </form>
         </div>
     </div>
 </div>

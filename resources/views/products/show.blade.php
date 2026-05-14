@@ -1,3 +1,5 @@
+@extends('layouts.dashboard')
+
 @section('content')
 <div id="products-show">
     <div style="padding:24px; max-width:1200px; margin:0 auto;">
@@ -16,21 +18,21 @@
                 </p>
             </div>
             <div style="display:flex; gap:12px;">
-                <button onclick="showPage('products-index')"
+                <a href="{{ route('products.index') }}"
                     style="display:flex; align-items:center; gap:8px;
                            padding:10px 18px; background:#6b7280;
                            color:white; border:none; border-radius:8px;
-                           font-size:14px; font-weight:500; cursor:pointer;">
+                           font-size:14px; font-weight:500; cursor:pointer; text-decoration:none;">
                     ← Retour
-                </button>
-                <button onclick="showPage('products-edit')"
+                </a>
+                <a href="{{ route('products.edit', 1) }}"
                     style="display:flex; align-items:center; gap:8px;
                            padding:10px 18px; background:linear-gradient(135deg, #3b82f6, #2563eb);
                            color:white; border:none; border-radius:8px;
                            font-size:14px; font-weight:500; cursor:pointer;
-                           box-shadow:0 4px 12px rgba(59,130,246,0.3);">
+                           box-shadow:0 4px 12px rgba(59,130,246,0.3); text-decoration:none;">
                     ✏️ Modifier
-                </button>
+                </a>
             </div>
         </div>
 

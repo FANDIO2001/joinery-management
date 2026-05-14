@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<div id="invoices-create">
+<div id="stocks-create">
     <div style="padding:24px; max-width:800px; margin:0 auto;">
         
         <!-- Header -->
@@ -10,13 +10,13 @@
             <div>
                 <h1 style="font-size:24px; font-weight:700; 
                            color:#1f2937; margin:0;">
-                    Nouvelle Facture
+                    Nouveau Stock
                 </h1>
                 <p style="color:#6b7280; margin:4px 0 0;">
-                    Créer une nouvelle facture client
+                    Ajouter un nouvel élément au stock
                 </p>
             </div>
-            <button onclick="window.location.href='/invoices'"
+            <button onclick="window.location.href='/stocks'"
                 style="display:flex; align-items:center; gap:8px;
                        padding:10px 18px; background:#6b7280;
                        color:white; border:none; border-radius:8px;
@@ -30,51 +30,14 @@
                     box-shadow:0 4px 20px rgba(0,0,0,0.08);
                     border:1px solid #e5e7eb; padding:32px;">
 
-            <!-- Client -->
+            <!-- Nom -->
             <div style="margin-bottom:20px;">
                 <label style="display:block; margin-bottom:8px;
                               font-weight:600; color:#374151; font-size:14px;">
-                    Client *
+                    Nom *
                 </label>
-                <select name="invoice_customer"
-                    style="width:100%; padding:12px 16px;
-                           border:2px solid #e5e7eb; border-radius:8px;
-                           font-size:15px; box-sizing:border-box;
-                           outline:none; background:white;"
-                    onfocus="this.style.borderColor='#10b981'"
-                    onblur="this.style.borderColor='#e5e7eb'">
-                    <option value="">Sélectionner un client...</option>
-                    <option value="1">Jean Dupont</option>
-                    <option value="2">Marie Kouassi</option>
-                </select>
-            </div>
-
-            <!-- Commande associée -->
-            <div style="margin-bottom:20px;">
-                <label style="display:block; margin-bottom:8px;
-                              font-weight:600; color:#374151; font-size:14px;">
-                    Commande associée
-                </label>
-                <select name="invoice_order"
-                    style="width:100%; padding:12px 16px;
-                           border:2px solid #e5e7eb; border-radius:8px;
-                           font-size:15px; box-sizing:border-box;
-                           outline:none; background:white;"
-                    onfocus="this.style.borderColor='#10b981'"
-                    onblur="this.style.borderColor='#e5e7eb'">
-                    <option value="">Sélectionner une commande...</option>
-                    <option value="1">CMD-2024-001</option>
-                    <option value="2">CMD-2024-002</option>
-                </select>
-            </div>
-
-            <!-- Date de facture -->
-            <div style="margin-bottom:20px;">
-                <label style="display:block; margin-bottom:8px;
-                              font-weight:600; color:#374151; font-size:14px;">
-                    Date de facture *
-                </label>
-                <input type="date" name="invoice_date"
+                <input type="text" name="stock_name"
+                    placeholder="Chêne massif"
                     style="width:100%; padding:12px 16px;
                            border:2px solid #e5e7eb; border-radius:8px;
                            font-size:15px; box-sizing:border-box;
@@ -83,55 +46,94 @@
                     onblur="this.style.borderColor='#e5e7eb'">
             </div>
 
-            <!-- Date d'échéance -->
+            <!-- Type -->
             <div style="margin-bottom:20px;">
                 <label style="display:block; margin-bottom:8px;
                               font-weight:600; color:#374151; font-size:14px;">
-                    Date d'échéance *
+                    Type *
                 </label>
-                <input type="date" name="invoice_due_date"
-                    style="width:100%; padding:12px 16px;
-                           border:2px solid #e5e7eb; border-radius:8px;
-                           font-size:15px; box-sizing:border-box;
-                           outline:none; transition:border-color 0.2s;"
-                    onfocus="this.style.borderColor='#10b981'"
-                    onblur="this.style.borderColor='#e5e7eb'">
-            </div>
-
-            <!-- Montant -->
-            <div style="margin-bottom:20px;">
-                <label style="display:block; margin-bottom:8px;
-                              font-weight:600; color:#374151; font-size:14px;">
-                    Montant (FCFA) *
-                </label>
-                <input type="number" name="invoice_amount"
-                    placeholder="450000"
-                    style="width:100%; padding:12px 16px;
-                           border:2px solid #e5e7eb; border-radius:8px;
-                           font-size:15px; box-sizing:border-box;
-                           outline:none; transition:border-color 0.2s;"
-                    onfocus="this.style.borderColor='#10b981'"
-                    onblur="this.style.borderColor='#e5e7eb'">
-            </div>
-
-            <!-- Statut -->
-            <div style="margin-bottom:20px;">
-                <label style="display:block; margin-bottom:8px;
-                              font-weight:600; color:#374151; font-size:14px;">
-                    Statut *
-                </label>
-                <select name="invoice_status"
+                <select name="stock_type"
                     style="width:100%; padding:12px 16px;
                            border:2px solid #e5e7eb; border-radius:8px;
                            font-size:15px; box-sizing:border-box;
                            outline:none; background:white;"
                     onfocus="this.style.borderColor='#10b981'"
                     onblur="this.style.borderColor='#e5e7eb'">
-                    <option value="draft">Brouillon</option>
-                    <option value="sent">Envoyée</option>
-                    <option value="paid">Payée</option>
-                    <option value="overdue">En retard</option>
+                    <option value="">Sélectionner...</option>
+                    <option value="material">Matière première</option>
+                    <option value="product">Produit fini</option>
+                    <option value="accessory">Accessoire</option>
                 </select>
+            </div>
+
+            <!-- Quantité + Unité -->
+            <div style="display:grid; grid-template-columns:1fr 1fr;
+                        gap:20px; margin-bottom:20px;">
+                <div>
+                    <label style="display:block; margin-bottom:8px;
+                                  font-weight:600; color:#374151; font-size:14px;">
+                        Quantité *
+                    </label>
+                    <input type="number" name="stock_quantity"
+                        placeholder="150"
+                        style="width:100%; padding:12px 16px;
+                               border:2px solid #e5e7eb; border-radius:8px;
+                               font-size:15px; box-sizing:border-box;
+                               outline:none; transition:border-color 0.2s;"
+                        onfocus="this.style.borderColor='#10b981'"
+                        onblur="this.style.borderColor='#e5e7eb'">
+                </div>
+                <div>
+                    <label style="display:block; margin-bottom:8px;
+                                  font-weight:600; color:#374151; font-size:14px;">
+                        Unité *
+                    </label>
+                    <select name="stock_unit"
+                        style="width:100%; padding:12px 16px;
+                               border:2px solid #e5e7eb; border-radius:8px;
+                               font-size:15px; box-sizing:border-box;
+                               outline:none; background:white;"
+                        onfocus="this.style.borderColor='#10b981'"
+                        onblur="this.style.borderColor='#e5e7eb'">
+                        <option value="">Sélectionner...</option>
+                        <option value="m²">m²</option>
+                        <option value="kg">kg</option>
+                        <option value="unité">unité</option>
+                        <option value="litre">litre</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Seuil d'alerte -->
+            <div style="margin-bottom:20px;">
+                <label style="display:block; margin-bottom:8px;
+                              font-weight:600; color:#374151; font-size:14px;">
+                    Seuil d'alerte
+                </label>
+                <input type="number" name="stock_threshold"
+                    placeholder="20"
+                    style="width:100%; padding:12px 16px;
+                           border:2px solid #e5e7eb; border-radius:8px;
+                           font-size:15px; box-sizing:border-box;
+                           outline:none; transition:border-color 0.2s;"
+                    onfocus="this.style.borderColor='#10b981'"
+                    onblur="this.style.borderColor='#e5e7eb'">
+            </div>
+
+            <!-- Emplacement -->
+            <div style="margin-bottom:20px;">
+                <label style="display:block; margin-bottom:8px;
+                              font-weight:600; color:#374151; font-size:14px;">
+                    Emplacement
+                </label>
+                <input type="text" name="stock_location"
+                    placeholder="Entrepôt A, Rayon 3"
+                    style="width:100%; padding:12px 16px;
+                           border:2px solid #e5e7eb; border-radius:8px;
+                           font-size:15px; box-sizing:border-box;
+                           outline:none; transition:border-color 0.2s;"
+                    onfocus="this.style.borderColor='#10b981'"
+                    onblur="this.style.borderColor='#e5e7eb'">
             </div>
 
             <!-- Notes -->
@@ -140,7 +142,7 @@
                               font-weight:600; color:#374151; font-size:14px;">
                     Notes
                 </label>
-                <textarea name="invoice_notes" rows="4"
+                <textarea name="stock_notes" rows="4"
                     placeholder="Informations supplémentaires..."
                     style="width:100%; padding:12px 16px;
                            border:2px solid #e5e7eb; border-radius:8px;
@@ -153,20 +155,20 @@
             <!-- Boutons -->
             <div style="display:flex; gap:15px; padding-top:24px;
                         border-top:1px solid #e5e7eb; justify-content:flex-end;">
-                <button onclick="window.location.href='/invoices'"
+                <button onclick="window.location.href='/stocks'"
                     style="padding:12px 28px; background:#6b7280;
                            color:white; border:none; border-radius:8px;
                            font-size:15px; font-weight:600; cursor:pointer;">
                     Annuler
                 </button>
                 <button type="button"
-                    onclick="alert('Facture enregistrée - À connecter avec Laravel')"
+                    onclick="alert('Stock enregistré - À connecter avec Laravel')"
                     style="padding:12px 28px;
                            background:linear-gradient(135deg, #10b981, #059669);
                            color:white; border:none; border-radius:8px;
                            font-size:15px; font-weight:600; cursor:pointer;
                            box-shadow:0 4px 12px rgba(16,185,129,0.3);">
-                    💾 Enregistrer la facture
+                    💾 Enregistrer le stock
                 </button>
             </div>
         </div>

@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - DOLLARS MENUISERIE</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{{ asset('css/tailwind.css') }}">
+    <script src="{{ asset('js/app.js') }}" defer></script>
     <style>
         :root {
             --brand-primary: #1e3a8a;
@@ -32,6 +33,7 @@
             left: 0;
             top: 0;
             z-index: 50;
+            overflow-y: auto;
         }
 
         .sidebar-brand {
@@ -285,26 +287,26 @@
                         </svg>
                     </div>
                 </div>
-                <div class="sidebar-nav-items" id="products-section" style="display: none;">
-                    <a href="/products" class="sidebar-nav-item">
+                <div class="sidebar-nav-items" id="products-section" style="display: block;">
+                    <a href="{{ route('products.index') }}" class="sidebar-nav-item {{ request()->routeIs('products.*') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-2m0 0l7 7M5 10v10a1 1 0 011-1h3a1 1 0 012-2v4a1 1 0 01-2h-2M9 5a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                         </svg>
                         Produits
                     </a>
-                    <a href="/products/create" class="sidebar-nav-item">
+                    <a href="{{ route('products.create') }}" class="sidebar-nav-item {{ request()->routeIs('products.create') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H12a2 2 0 00-2-2v12a2 2 0 002 2h12a2 2 0 002-2M12 4v16m8-8H12a2 2 0 00-2-2v12a2 2 0 002 2h12a2 2 0 002-2"></path>
                         </svg>
                         Ajouter Produit
                     </a>
-                    <a href="/categories" class="sidebar-nav-item">
+                    <a href="{{ route('settings.categories') }}" class="sidebar-nav-item {{ request()->routeIs('settings.categories') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
                         </svg>
                         Catégories
                     </a>
-                    <a href="/stock" class="sidebar-nav-item">
+                    <a href="{{ route('stocks.index') }}" class="sidebar-nav-item {{ request()->routeIs('stocks.*') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                         </svg>
@@ -326,25 +328,25 @@
                     </div>
                 </div>
                 <div class="sidebar-nav-items" id="orders-section" style="display: none;">
-                    <a href="/orders" class="sidebar-nav-item">
+                    <a href="{{ route('orders.index') }}" class="sidebar-nav-item {{ request()->routeIs('orders.*') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
                         </svg>
                         Toutes les Commandes
                     </a>
-                    <a href="/orders/create" class="sidebar-nav-item">
+                    <a href="{{ route('orders.create') }}" class="sidebar-nav-item {{ request()->routeIs('orders.create') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H12a2 2 0 00-2-2v12a2 2 0 002 2h12a2 2 0 002-2M12 4v16m8-8H12a2 2 0 00-2-2v12a2 2 0 002 2h12a2 2 0 002-2"></path>
                         </svg>
                         Nouvelle Commande
                     </a>
-                    <a href="/quotes" class="sidebar-nav-item">
+                    <a href="{{ route('quotes.index') }}" class="sidebar-nav-item {{ request()->routeIs('quotes.*') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
                         Devis
                     </a>
-                    <a href="/invoices" class="sidebar-nav-item">
+                    <a href="{{ route('invoices.index') }}" class="sidebar-nav-item {{ request()->routeIs('invoices.*') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"></path>
                         </svg>
@@ -366,23 +368,17 @@
                     </div>
                 </div>
                 <div class="sidebar-nav-items" id="customers-section" style="display: none;">
-                    <a href="/customers" class="sidebar-nav-item">
+                    <a href="{{ route('customers.index') }}" class="sidebar-nav-item {{ request()->routeIs('customers.*') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
                         </svg>
                         Clients
                     </a>
-                    <a href="/customers/create" class="sidebar-nav-item">
+                    <a href="{{ route('customers.create') }}" class="sidebar-nav-item {{ request()->routeIs('customers.create') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                         </svg>
                         Ajouter Client
-                    </a>
-                    <a href="/loyalty" class="sidebar-nav-item">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-                        </svg>
-                        Fidélité
                     </a>
                 </div>
             </div>
@@ -400,26 +396,13 @@
                     </div>
                 </div>
                 <div class="sidebar-nav-items" id="production-section" style="display: none;">
-                    <a href="/production" class="sidebar-nav-item">
+                    <a href="{{ route('production.calendar') }}" class="sidebar-nav-item {{ request()->routeIs('production.calendar') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
                         </svg>
                         Production
                     </a>
-                    <a href="/work-orders" class="sidebar-nav-item">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
-                        </svg>
-                        Ordres Fabrication
-                    </a>
-                    <a href="/machines" class="sidebar-nav-item">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                        Machines
-                    </a>
-                    <a href="/materials" class="sidebar-nav-item">
+                    <a href="{{ route('stocks.materials') }}" class="sidebar-nav-item {{ request()->routeIs('stocks.materials') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
                         </svg>
@@ -433,25 +416,25 @@
                 <div style="padding: 0.5rem 1.5rem; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.05em;">
                     👤 Ressources Humaines
                 </div>
-                <a href="/employees" class="sidebar-nav-item">
+                <a href="{{ route('employees.index') }}" class="sidebar-nav-item {{ request()->routeIs('employees.*') ? 'active' : '' }}">
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                     </svg>
                     Employés
                 </a>
-                <a href="/employees/create" class="sidebar-nav-item">
+                <a href="{{ route('employees.create') }}" class="sidebar-nav-item {{ request()->routeIs('employees.create') ? 'active' : '' }}">
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
                     </svg>
                     Ajouter Employé
                 </a>
-                <a href="/payroll" class="sidebar-nav-item">
+                <a href="#" class="sidebar-nav-item" style="opacity: 0.5; cursor: not-allowed;">
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    Paie
+                    Paie (Bientôt)
                 </a>
-                <a href="/leaves" class="sidebar-nav-item">
+                <a href="{{ route('employees.index') }}" class="sidebar-nav-item {{ request()->routeIs('employees.*') ? 'active' : '' }}">
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
@@ -472,72 +455,27 @@
                     </div>
                 </div>
                 <div class="sidebar-nav-items" id="logistics-section" style="display: none;">
-                    <a href="/deliveries" class="sidebar-nav-item">
+                    <a href="{{ route('stocks.index') }}" class="sidebar-nav-item {{ request()->routeIs('stocks.*') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 104 0m6 0a2 2 0 104 0m-4 0a2 2 0 104 0"></path>
                         </svg>
-                        Livraisons
-                    </a>
-                    <a href="/tracking" class="sidebar-nav-item">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                        Tracking
+                        Stocks
                     </a>
                 </div>
             </div>
 
-            <!-- TRANSPORT -->
-            <div style="margin-bottom: 1.5rem;">
-                <div class="sidebar-nav-section-header" onclick="toggleSection('transport-section')">
-                    <div style="display: flex; align-items: center; gap: 0.5rem;">
-                        <div style="padding: 0.5rem 1.5rem; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.05em;">
-                            🚛 Transport
-                        </div>
-                        <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </div>
-                </div>
-                <div class="sidebar-nav-items" id="transport-section" style="display: none;">
-                    <a href="/suppliers" class="sidebar-nav-item">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                        </svg>
-                        Fournisseurs
-                    </a>
-                </div>
-            </div>
+
 
             <!-- ADMINISTRATION -->
             <div style="margin-bottom: 1.5rem;">
                 <div style="padding: 0.5rem 1.5rem; font-size: 0.75rem; font-weight: 600; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.05em;">
                     ⚙️ Administration
                 </div>
-                <a href="/reports" class="sidebar-nav-item">
+                <a href="{{ route('reports.index') }}" class="sidebar-nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
                     <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v1a3 3 0 003 3h0a3 3 0 003-3v-1m3-10V4a2 2 0 00-2-2H8a2 2 0 00-2 2v3m3 10h6m-6-4h6"></path>
                     </svg>
                     Rapports & Analytics
-                </a>
-                <a href="/users" class="sidebar-nav-item">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                    </svg>
-                    Utilisateurs
-                </a>
-                <a href="/permissions" class="sidebar-nav-item">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
-                    </svg>
-                    Permissions
-                </a>
-                                <a href="/notifications" class="sidebar-nav-item">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-                    </svg>
-                    Notifications
                 </a>
             </div>
 
@@ -554,31 +492,17 @@
                     </div>
                 </div>
                 <div class="sidebar-nav-items" id="profile-section" style="display: block;">
-                    <a href="/profile" class="sidebar-nav-item">
+                    <a href="{{ route('profile.index') }}" class="sidebar-nav-item {{ request()->routeIs('profile.index') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
                         Voir mon profil
                     </a>
-                    <a href="/profile/edit" class="sidebar-nav-item">
+                    <a href="{{ route('profile.edit') }}" class="sidebar-nav-item {{ request()->routeIs('profile.edit') ? 'active' : '' }}">
                         <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                         </svg>
                         Modifier profil
-                    </a>
-                    <a href="/security" class="sidebar-nav-item">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                        Préférences
-                    </a>
-                    <a href="/settings" class="sidebar-nav-item">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543-.826-3.31-2.37-2.37a1.724 1.724 0 00-2.572-1.065c-.426-1.756-2.924-1.756-3.35 0a1.724 1.724 0 00-2.573 1.066c-1.543-.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543-.826-3.31-2.37-2.37a1.724 1.724 0 00-2.572-1.065c-.426-1.756-2.924-1.756-3.35 0a1.724 1.724 0 00-2.573 1.066c-1.543-.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543-.826-3.31-2.37-2.37a1.724 1.724 0 00-2.572-1.065c-.426-1.756-2.924-1.756-3.35 0a1.724 1.724 0 00-2.573 1.066c-1.543-.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543-.826-3.31-2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                        </svg>
-                        Paramètres Système
                     </a>
                 </div>
             </div>
@@ -597,20 +521,20 @@
             </div>
             
             <div id="userDropdown" class="sidebar-user-dropdown">
-                <a href="/profile" class="sidebar-user-dropdown-item">
+                <a href="{{ route('profile.index') }}" class="sidebar-user-dropdown-item">
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                     </svg>
                     Voir mon profil
                 </a>
-                <a href="/profile/edit" class="sidebar-user-dropdown-item">
+                <a href="{{ route('profile.edit') }}" class="sidebar-user-dropdown-item">
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                     </svg>
                     Modifier profil
                 </a>
                 <div style="height: 1px; background: #e5e7eb; margin: 0.25rem 0;"></div>
-                <a href="/logout" class="sidebar-user-dropdown-item" style="color: #ef4444;">
+                <a href="{{ route('logout') }}" class="sidebar-user-dropdown-item" style="color: #ef4444;">
                     <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
                     </svg>
@@ -623,8 +547,8 @@
     <div class="main-content">
         <header class="header">
             <div>
-                <h1 class="header-title">Tableau de bord</h1>
-                <p class="header-subtitle">Vue d'ensemble de l'activité • {{ date('d/m/Y') }}</p>
+                <h1 class="header-title">@yield('title', 'Tableau de bord')</h1>
+                <p class="header-subtitle">@yield('subtitle', 'Vue d\'ensemble de l\'activité • '.date('d/m/Y'))</p>
             </div>
             <div style="display: flex; gap: 1rem;">
                 <button style="padding: 0.5rem 1rem; background: rgba(255,255,255,0.1); border: none; border-radius: 0.5rem; color: white; cursor: pointer;">
@@ -636,91 +560,8 @@
             </div>
         </header>
 
-        <div class="content">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-title">Chiffre d'affaires</div>
-                    <div class="stat-value">€45,231</div>
-                    <div class="stat-change positive">+12.5% vs mois dernier</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-title">Commandes en cours</div>
-                    <div class="stat-value">28</div>
-                    <div class="stat-change positive">+8 nouvelles aujourd'hui</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-title">Produits en stock</div>
-                    <div class="stat-value">156</div>
-                    <div class="stat-change negative">-5 en rupture</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-title">Clients actifs</div>
-                    <div class="stat-value">89</div>
-                    <div class="stat-change positive">+3 ce mois</div>
-                </div>
-            </div>
-
-            <div class="card">
-                <h2 class="card-title">Commandes récentes</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>N° Commande</th>
-                            <th>Client</th>
-                            <th>Produit</th>
-                            <th>Montant</th>
-                            <th>Statut</th>
-                            <th>Date</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>#CMD-2025-001</td>
-                            <td>Martin Dubois</td>
-                            <td>Table en chêne</td>
-                            <td>€2,450</td>
-                            <td><span class="badge badge-success">Livrée</span></td>
-                            <td>12/05/2025</td>
-                        </tr>
-                        <tr>
-                            <td>#CMD-2025-002</td>
-                            <td>Sophie Laurent</td>
-                            <td>Étagère sur mesure</td>
-                            <td>€890</td>
-                            <td><span class="badge badge-warning">En cours</span></td>
-                            <td>11/05/2025</td>
-                        </tr>
-                        <tr>
-                            <td>#CMD-2025-003</td>
-                            <td>Thomas Bernard</td>
-                            <td>Porte d'entrée</td>
-                            <td>€3,200</td>
-                            <td><span class="badge badge-danger">En attente</span></td>
-                            <td>10/05/2025</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="card">
-                <h2 class="card-title">Tâches prioritaires</h2>
-                <div style="display: grid; gap: 1rem;">
-                    <div style="padding: 1rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-weight: 600;">Finaliser commande #CMD-2025-002</div>
-                            <div style="font-size: 0.875rem; color: #6b7280;">Étagère sur mesure - Client: Sophie Laurent</div>
-                        </div>
-                        <span class="badge badge-warning">Urgent</span>
-                    </div>
-                    <div style="padding: 1rem; border: 1px solid #e5e7eb; border-radius: 0.5rem; display: flex; justify-content: space-between; align-items: center;">
-                        <div>
-                            <div style="font-weight: 600;">Réapprovisionner bois de chêne</div>
-                            <div style="font-size: 0.875rem; color: #6b7280;">Stock critique - 5 pièces restantes</div>
-                        </div>
-                        <span class="badge badge-danger">Critique</span>
-                    </div>
-                </div>
-            </div>
+        <div class="content" id="main-content">
+            @yield('content')
         </div>
     </div>
 
@@ -747,5 +588,6 @@
             }
         });
     </script>
+    @yield('scripts')
 </body>
 </html>

@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('content')
-<div id="invoices-create">
+<div id="orders-create">
     <div style="padding:24px; max-width:800px; margin:0 auto;">
         
         <!-- Header -->
@@ -10,13 +10,13 @@
             <div>
                 <h1 style="font-size:24px; font-weight:700; 
                            color:#1f2937; margin:0;">
-                    Nouvelle Facture
+                    Nouvelle Commande
                 </h1>
                 <p style="color:#6b7280; margin:4px 0 0;">
-                    Créer une nouvelle facture client
+                    Créer une nouvelle commande client
                 </p>
             </div>
-            <button onclick="window.location.href='/invoices'"
+            <button onclick="window.location.href='/orders'"
                 style="display:flex; align-items:center; gap:8px;
                        padding:10px 18px; background:#6b7280;
                        color:white; border:none; border-radius:8px;
@@ -36,7 +36,7 @@
                               font-weight:600; color:#374151; font-size:14px;">
                     Client *
                 </label>
-                <select name="invoice_customer"
+                <select name="order_customer"
                     style="width:100%; padding:12px 16px;
                            border:2px solid #e5e7eb; border-radius:8px;
                            font-size:15px; box-sizing:border-box;
@@ -49,32 +49,13 @@
                 </select>
             </div>
 
-            <!-- Commande associée -->
+            <!-- Date de commande -->
             <div style="margin-bottom:20px;">
                 <label style="display:block; margin-bottom:8px;
                               font-weight:600; color:#374151; font-size:14px;">
-                    Commande associée
+                    Date de commande *
                 </label>
-                <select name="invoice_order"
-                    style="width:100%; padding:12px 16px;
-                           border:2px solid #e5e7eb; border-radius:8px;
-                           font-size:15px; box-sizing:border-box;
-                           outline:none; background:white;"
-                    onfocus="this.style.borderColor='#10b981'"
-                    onblur="this.style.borderColor='#e5e7eb'">
-                    <option value="">Sélectionner une commande...</option>
-                    <option value="1">CMD-2024-001</option>
-                    <option value="2">CMD-2024-002</option>
-                </select>
-            </div>
-
-            <!-- Date de facture -->
-            <div style="margin-bottom:20px;">
-                <label style="display:block; margin-bottom:8px;
-                              font-weight:600; color:#374151; font-size:14px;">
-                    Date de facture *
-                </label>
-                <input type="date" name="invoice_date"
+                <input type="date" name="order_date"
                     style="width:100%; padding:12px 16px;
                            border:2px solid #e5e7eb; border-radius:8px;
                            font-size:15px; box-sizing:border-box;
@@ -83,29 +64,13 @@
                     onblur="this.style.borderColor='#e5e7eb'">
             </div>
 
-            <!-- Date d'échéance -->
+            <!-- Date de livraison souhaitée -->
             <div style="margin-bottom:20px;">
                 <label style="display:block; margin-bottom:8px;
                               font-weight:600; color:#374151; font-size:14px;">
-                    Date d'échéance *
+                    Date de livraison souhaitée
                 </label>
-                <input type="date" name="invoice_due_date"
-                    style="width:100%; padding:12px 16px;
-                           border:2px solid #e5e7eb; border-radius:8px;
-                           font-size:15px; box-sizing:border-box;
-                           outline:none; transition:border-color 0.2s;"
-                    onfocus="this.style.borderColor='#10b981'"
-                    onblur="this.style.borderColor='#e5e7eb'">
-            </div>
-
-            <!-- Montant -->
-            <div style="margin-bottom:20px;">
-                <label style="display:block; margin-bottom:8px;
-                              font-weight:600; color:#374151; font-size:14px;">
-                    Montant (FCFA) *
-                </label>
-                <input type="number" name="invoice_amount"
-                    placeholder="450000"
+                <input type="date" name="order_delivery_date"
                     style="width:100%; padding:12px 16px;
                            border:2px solid #e5e7eb; border-radius:8px;
                            font-size:15px; box-sizing:border-box;
@@ -120,17 +85,17 @@
                               font-weight:600; color:#374151; font-size:14px;">
                     Statut *
                 </label>
-                <select name="invoice_status"
+                <select name="order_status"
                     style="width:100%; padding:12px 16px;
                            border:2px solid #e5e7eb; border-radius:8px;
                            font-size:15px; box-sizing:border-box;
                            outline:none; background:white;"
                     onfocus="this.style.borderColor='#10b981'"
                     onblur="this.style.borderColor='#e5e7eb'">
-                    <option value="draft">Brouillon</option>
-                    <option value="sent">Envoyée</option>
-                    <option value="paid">Payée</option>
-                    <option value="overdue">En retard</option>
+                    <option value="pending">En attente</option>
+                    <option value="processing">En cours</option>
+                    <option value="completed">Terminée</option>
+                    <option value="cancelled">Annulée</option>
                 </select>
             </div>
 
@@ -140,7 +105,7 @@
                               font-weight:600; color:#374151; font-size:14px;">
                     Notes
                 </label>
-                <textarea name="invoice_notes" rows="4"
+                <textarea name="order_notes" rows="4"
                     placeholder="Informations supplémentaires..."
                     style="width:100%; padding:12px 16px;
                            border:2px solid #e5e7eb; border-radius:8px;
@@ -153,20 +118,20 @@
             <!-- Boutons -->
             <div style="display:flex; gap:15px; padding-top:24px;
                         border-top:1px solid #e5e7eb; justify-content:flex-end;">
-                <button onclick="window.location.href='/invoices'"
+                <button onclick="window.location.href='/orders'"
                     style="padding:12px 28px; background:#6b7280;
                            color:white; border:none; border-radius:8px;
                            font-size:15px; font-weight:600; cursor:pointer;">
                     Annuler
                 </button>
                 <button type="button"
-                    onclick="alert('Facture enregistrée - À connecter avec Laravel')"
+                    onclick="alert('Commande enregistrée - À connecter avec Laravel')"
                     style="padding:12px 28px;
                            background:linear-gradient(135deg, #10b981, #059669);
                            color:white; border:none; border-radius:8px;
                            font-size:15px; font-weight:600; cursor:pointer;
                            box-shadow:0 4px 12px rgba(16,185,129,0.3);">
-                    💾 Enregistrer la facture
+                    💾 Enregistrer la commande
                 </button>
             </div>
         </div>
