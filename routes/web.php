@@ -76,13 +76,24 @@ Route::resource('stocks', StockController::class);
 Route::resource('employees.leaves', EmployeeLeaveController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 Route::resource('production.tasks', ProductionTaskController::class)->only(['index', 'edit', 'update']);
 
+// Leaves standalone routes
+Route::prefix('employees/leaves')->name('employees.leaves.')->group(function () {
+    Route::get('/', [EmployeeLeaveController::class, 'allLeaves'])->name('all');
+    Route::get('calendar', [EmployeeLeaveController::class, 'calendar'])->name('calendar');
+});
+
 // Special Routes
 Route::prefix('settings')->name('settings.')->group(function () {
     Route::get('/', [SettingsController::class, 'index'])->name('index');
     Route::get('company', [SettingsController::class, 'company'])->name('company');
     Route::post('company', [SettingsController::class, 'updateCompany'])->name('company.update');
     Route::get('categories', [SettingsController::class, 'categories'])->name('categories');
-    Route::post('categories', [SettingsController::class, 'updateCategories'])->name('categories.update');
+    Route::get('categories/create', [SettingsController::class, 'createCategory'])->name('categories.create');
+    Route::post('categories', [SettingsController::class, 'storeCategory'])->name('categories.store');
+    Route::get('categories/{category}/edit', [SettingsController::class, 'editCategory'])->name('categories.edit');
+    Route::put('categories/{category}', [SettingsController::class, 'updateCategory'])->name('categories.update');
+    Route::delete('categories/{category}', [SettingsController::class, 'destroyCategory'])->name('categories.destroy');
+    Route::post('categories/update', [SettingsController::class, 'updateCategories'])->name('categories.old-update');
     Route::get('materials', [SettingsController::class, 'materials'])->name('materials');
     Route::post('materials', [SettingsController::class, 'updateMaterials'])->name('materials.update');
 });
@@ -98,6 +109,19 @@ Route::prefix('production')->name('production.')->group(function () {
 });
 
 Route::prefix('reports')->name('reports.')->group(function () {
+    Route::get('/', [ReportController::class, 'index'])->name('index');
+});
+
+// Additional Routes
+Route::prefix('deliveries')->name('deliveries.')->group(function () {
+    Route::get('/', [ReportController::class, 'index'])->name('index');
+});
+
+Route::prefix('sav')->name('sav.')->group(function () {
+    Route::get('/', [ReportController::class, 'index'])->name('index');
+});
+
+Route::prefix('notifications')->name('notifications.')->group(function () {
     Route::get('/', [ReportController::class, 'index'])->name('index');
 });
 

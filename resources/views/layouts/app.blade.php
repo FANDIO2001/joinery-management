@@ -23,8 +23,11 @@
     @stack('styles')
 </head>
 <body class="bg-white text-gray-900 antialiased">
-    <!-- Main Content -->
-    @yield('content')
+    @include('layouts.partials.nav')
+    <main class="min-h-screen">
+        @include('layouts.partials.alerts')
+        @yield('content')
+    </main>
     
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
