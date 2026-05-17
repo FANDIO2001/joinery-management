@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
-
+@section('title', 'Catégories')
+@section('subtitle', 'Ajouter une catégorie')
 @section('content')
 <div id="categories-create">
     <div style="padding:24px; max-width:800px; margin:0 auto;">

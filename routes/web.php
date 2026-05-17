@@ -24,12 +24,14 @@ use App\Http\Controllers\StockAlertController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\StockMaterialController;
 use App\Http\Controllers\StockMovementController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 //welcom view is the default view when you access the root URL of the application. It is typically used as a landing page or homepage for the application. The welcome view can contain any content you want, such as a welcome message, links to other parts of the application, or any other information you want to display to users when they first visit your site.
 //resources/view/welcome.blade.php
 Route::get('/', function () {
-    return view('welcome');
+    $products = \App\Models\Product::with('images')->latest()->take(10)->get();
+    return view('welcome', compact('products'));
 });
 
 // Auth Routes
@@ -42,6 +44,9 @@ Route::post('forgot-password', [AuthController::class, 'sendReset'])->name('pass
 Route::get('reset-password/{token}', [AuthController::class, 'resetForm'])->name('password.reset');// a coder dans ressources/views/auth/reset-password.blade.php
 Route::post('reset-password', [AuthController::class, 'resetStore'])->name('password.store');// a ne pas toucher   
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');// a ne pas toucher
+Route::get('users', [UserController::class, 'index'])->name('users.index');// a ne pas toucher
+Route::get('users/create', [UserController::class, 'create'])->name('users.create');// a ne pas toucher
+Route::post('users', [UserController::class, 'store'])->name('users.store');
 
 // Dashboard
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');

@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
-
+@section('title', 'Paramètres')
+@section('subtitle', 'Configurer les paramètres de votre application')
 @section('content')
 <div id="settings-index">
     <div style="padding:24px; max-width:1200px; margin:0 auto;">

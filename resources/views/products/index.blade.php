@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
-
+@section('title', 'Produits')
+@section('subtitle', 'Liste des produits')
 @section('content')
 <div id="products-index">
     <div style="padding:24px; max-width:1400px; margin:0 auto;">

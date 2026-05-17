@@ -1,5 +1,6 @@
 @extends('layouts.dashboard')
-
+@section('title', 'Catégories')
+@section('subtitle', 'Gérer les catégories de produits')
 @section('content')
 <div id="categories-settings">
     <div style="padding:24px; max-width:1200px; margin:0 auto;">

@@ -11,13 +11,25 @@ class ShopController extends Controller
         return view('shop.index');
     }
 
-    public function show($product)
+    public function show(\App\Models\Product $product)
     {
-        return view('shop.show');
+        $product->load(['images', 'category.parent.parent', 'variants']);
+
+        $relatedProducts = \App\Models\Product::query()
+            ->where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->where('status', 'active')
+            ->with('images')
+            ->limit(4)
+            ->get();
+
+        $product->increment('views_count');
+
+        return view('shop.show', compact('product', 'relatedProducts'));
     }
 
-    public function customize($product)
+    public function customize(\App\Models\Product $product)
     {
-        return view('shop.customize');
+        return view('shop.customize', compact('product'));
     }
 }

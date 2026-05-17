@@ -1,7 +1,7 @@
 @extends('layouts.dashboard')
 
 @section('title', 'Tableau de Bord')
-@section('subtitle', 'Bienvenue dans votre système de gestion')
+@section('subtitle','BIENVENUE' . ' ' . auth()->user()->name)
 
 @section('content')
 <div class="stats-grid">
