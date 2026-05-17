@@ -133,10 +133,18 @@ Route::prefix('notifications')->name('notifications.')->group(function () {
 // Shop (Public/Customer)
 Route::prefix('shop')->name('shop.')->group(function () {
     Route::get('/', [ShopController::class, 'index'])->name('index');
+    
+    Route::middleware(['auth'])->group(function () {
+        Route::get('cart', [CartController::class, 'index'])->name('cart');
+        Route::post('cart/add', [CartController::class, 'add'])->name('cart.add');
+        Route::patch('cart/{cartItem}', [CartController::class, 'update'])->name('cart.update');
+        Route::delete('cart/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
+        Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout');
+    });
+    
+    // Parameter routes must come after static routes
     Route::get('{product}', [ShopController::class, 'show'])->name('show');
     Route::get('{product}/customize', [ShopController::class, 'customize'])->name('customize');
-    Route::get('cart', [CartController::class, 'index'])->name('cart');
-    Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout');
 });
 
 // PDF Routes

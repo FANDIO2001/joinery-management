@@ -621,42 +621,69 @@
                     <p>{{ $product->description ?: 'Découvrez ce produit artisanal réalisé par DOLLARS MENUISERIE. Qualité premium, finitions soignées et fabrication sur mesure disponible.' }}</p>
                 </div>
 
-                @if($product->variants->isNotEmpty() || !empty($dimensions))
-                    <span class="size-label">OPTIONS</span>
-                    <div class="size-row">
-                        @if($product->variants->isNotEmpty())
-                            <select class="size-select" id="variantSelect" name="variant_id">
-                                @foreach($product->variants as $variant)
-                                    <option value="{{ $variant->id }}"
-                                        data-price-modifier="{{ $variant->price_modifier }}">
-                                        {{ $variant->name }}
-                                        @if($variant->price_modifier != 0)
-                                            ({{ $variant->price_modifier > 0 ? '+' : '' }}{{ number_format($variant->price_modifier, 0, ',', ' ') }} FCFA)
-                                        @endif
-                                    </option>
-                                @endforeach
-                            </select>
-                        @endif
-                        @if(!empty($dimensions))
-                            <select class="size-select" id="dimensionSelect">
-                                <option value="">Dimensions</option>
-                                @foreach($dimensions as $key => $value)
-                                    <option value="{{ $value }}">{{ ucfirst($key) }} : {{ $value }}</option>
-                                @endforeach
-                            </select>
-                        @endif
-                        @if($product->is_customizable)
-                            <a href="{{ route('shop.customize', $product) }}" class="size-guide">Personnaliser</a>
-                        @endif
-                    </div>
-                @endif
+                <form action="{{ route('shop.cart.add') }}" method="POST">
+                    @csrf
+                    <input type="hidden" name="product_id" value="{{ $product->id }}">
 
-                <div class="action-buttons">
-                    <a href="{{ route('shop.cart') }}" class="btn-cart">AJOUTER AU PANIER</a>
-                    <button type="button" class="btn-wishlist" onclick="alert('Liste de souhaits — bientôt disponible')">
-                        AJOUTER AUX FAVORIS
-                    </button>
-                </div>
+                    @if($product->variants->isNotEmpty() || !empty($dimensions) || $product->is_customizable)
+                        <span class="size-label">OPTIONS DE PERSONNALISATION</span>
+                        <div class="size-row" style="flex-direction: column; align-items: stretch; gap: 16px;">
+                            
+                            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                @if($product->variants->isNotEmpty())
+                                    <select class="size-select" id="variantSelect" name="variant_id" style="flex: 1;">
+                                        @foreach($product->variants as $variant)
+                                            <option value="{{ $variant->id }}"
+                                                data-price-modifier="{{ $variant->price_modifier }}">
+                                                {{ $variant->name }}
+                                                @if($variant->price_modifier != 0)
+                                                    ({{ $variant->price_modifier > 0 ? '+' : '' }}{{ number_format($variant->price_modifier, 0, ',', ' ') }} FCFA)
+                                                @endif
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                @endif
+                                @if(!empty($dimensions))
+                                    <select class="size-select" id="dimensionSelect" name="dimension" style="flex: 1;">
+                                        <option value="">Dimensions standards</option>
+                                        @foreach($dimensions as $key => $value)
+                                            <option value="{{ $value }}">{{ ucfirst($key) }} : {{ $value }}</option>
+                                        @endforeach
+                                    </select>
+                                @endif
+                            </div>
+
+                            @if($product->is_customizable)
+                                <div style="background: #f9fafb; border: 1px solid var(--shop-border); border-radius: 4px; padding: 16px;">
+                                    <span class="size-label" style="margin-bottom: 12px; color: var(--shop-primary);">DIMENSIONS SUR MESURE</span>
+                                    <div style="display: flex; gap: 16px;">
+                                        <div style="flex: 1;">
+                                            <label for="customWidth" style="font-size: 11px; color: var(--shop-text-muted); display: block; margin-bottom: 4px;">Largeur (cm)</label>
+                                            <input type="number" id="customWidth" name="custom_width" min="10" placeholder="Ex: 120" style="width: 100%; padding: 10px; border: 1px solid var(--shop-border); border-radius: 2px; font-size: 13px;">
+                                        </div>
+                                        <div style="flex: 1;">
+                                            <label for="customHeight" style="font-size: 11px; color: var(--shop-text-muted); display: block; margin-bottom: 4px;">Hauteur (cm)</label>
+                                            <input type="number" id="customHeight" name="custom_height" min="10" placeholder="Ex: 200" style="width: 100%; padding: 10px; border: 1px solid var(--shop-border); border-radius: 2px; font-size: 13px;">
+                                        </div>
+                                    </div>
+                                    <p style="font-size: 11px; color: var(--shop-text-muted); margin-top: 10px; font-style: italic;">Le prix final sera ajusté en fonction des dimensions saisies.</p>
+                                </div>
+                            @endif
+
+                        </div>
+                    @endif
+
+                    <div class="action-buttons">
+                        @auth
+                            <button type="submit" class="btn-cart">AJOUTER AU PANIER</button>
+                        @else
+                            <a href="{{ route('login') }}" class="btn-cart" style="text-align: center; background: var(--shop-text-muted); border-color: var(--shop-text-muted); text-decoration: none; display: flex; align-items: center; justify-content: center;">CONNECTEZ-VOUS POUR AJOUTER</a>
+                        @endauth
+                        <button type="button" class="btn-wishlist" onclick="alert('Liste de souhaits — bientôt disponible')">
+                            AJOUTER AUX FAVORIS
+                        </button>
+                    </div>
+                </form>
 
                 <div class="delivery-box">
                     <h4>ESTIMATION DE LIVRAISON</h4>

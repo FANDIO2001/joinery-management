@@ -36,15 +36,15 @@
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
                         <div>
                             <label style="display:block; margin-bottom:8px; font-weight:600; color:#374151; font-size:14px;">Nom complet *</label>
-                            <input type="text" value="Jean Dupont" style="width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:15px; outline:none;" onfocus="this.style.borderColor='#10b981'" onblur="this.style.borderColor='#e5e7eb'">
+                            <input type="text" name="name" value="{{ auth()->check() ? auth()->user()->name : '' }}" required placeholder="Ex: Jean Dupont" style="width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:15px; outline:none;" onfocus="this.style.borderColor='#10b981'" onblur="this.style.borderColor='#e5e7eb'">
                         </div>
                         <div>
                             <label style="display:block; margin-bottom:8px; font-weight:600; color:#374151; font-size:14px;">Email *</label>
-                            <input type="email" value="jean.dupont@email.com" style="width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:15px; outline:none;" onfocus="this.style.borderColor='#10b981'" onblur="this.style.borderColor='#e5e7eb'">
+                            <input type="email" name="email" value="{{ auth()->check() ? auth()->user()->email : '' }}" required placeholder="Ex: jean@email.com" style="width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:15px; outline:none;" onfocus="this.style.borderColor='#10b981'" onblur="this.style.borderColor='#e5e7eb'">
                         </div>
                         <div style="grid-column:span 2;">
                             <label style="display:block; margin-bottom:8px; font-weight:600; color:#374151; font-size:14px;">Téléphone *</label>
-                            <input type="tel" value="+237 698 234 567" style="width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:15px; outline:none;" onfocus="this.style.borderColor='#10b981'" onblur="this.style.borderColor='#e5e7eb'">
+                            <input type="tel" name="phone" value="{{ auth()->check() ? auth()->user()->phone : '' }}" required placeholder="Ex: +237 600 000 000" style="width:100%; padding:12px 16px; border:2px solid #e5e7eb; border-radius:8px; font-size:15px; outline:none;" onfocus="this.style.borderColor='#10b981'" onblur="this.style.borderColor='#e5e7eb'">
                         </div>
                     </div>
                 </div>
@@ -60,19 +60,18 @@
                     
                     <!-- Saved Addresses -->
                     <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px;">
-                        <div style="padding:16px; border:2px solid #10b981; border-radius:12px; background:#f0fdf4; cursor:pointer;">
+                        <input type="hidden" name="saved_address" id="address_method" value="home">
+                        <div class="address-option" onclick="selectOption('address', 'home', this)" style="padding:16px; border:2px solid #10b981; border-radius:12px; background:#f0fdf4; cursor:pointer;">
                             <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-                                <div style="width:16px; height:16px; background:#10b981; border-radius:50%; border:3px solid white;"></div>
+                                <div class="radio-circle" style="width:16px; height:16px; background:#10b981; border-radius:50%; border:3px solid white; box-shadow:0 0 0 1px #10b981;"></div>
                                 <span style="font-weight:600; color:#1f2937; font-size:14px;">Domicile</span>
                             </div>
-                            <p style="color:#6b7280; font-size:13px; margin:0;">123 Rue de l'Indépendance, Yaoundé, Cameroun</p>
                         </div>
-                        <div style="padding:16px; border:2px solid #e5e7eb; border-radius:12px; cursor:pointer;" onmouseover="this.style.borderColor='#3b82f6'" onmouseout="this.style.borderColor='#e5e7eb'">
+                        <div class="address-option" onclick="selectOption('address', 'work', this)" style="padding:16px; border:2px solid #e5e7eb; border-radius:12px; background:white; cursor:pointer;" onmouseover="if(this.style.borderColor !== 'rgb(16, 185, 129)') this.style.borderColor='#3b82f6'" onmouseout="if(this.style.borderColor !== 'rgb(16, 185, 129)') this.style.borderColor='#e5e7eb'">
                             <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-                                <div style="width:16px; height:16px; background:white; border:2px solid #e5e7eb; border-radius:50%;"></div>
+                                <div class="radio-circle" style="width:16px; height:16px; background:white; border-radius:50%; border:2px solid #e5e7eb; transition:all 0.2s;"></div>
                                 <span style="font-weight:600; color:#1f2937; font-size:14px;">Bureau</span>
                             </div>
-                            <p style="color:#6b7280; font-size:13px; margin:0;">45 Avenue Kennedy, Yaoundé, Cameroun</p>
                         </div>
                     </div>
 
@@ -97,20 +96,23 @@
                     <h2 style="font-size:18px; font-weight:700; color:#1f2937; margin:0 0 20px 0;">🚚 Mode de livraison</h2>
                     
                     <div style="display:grid; gap:12px;">
-                        <div style="padding:16px; border:2px solid #10b981; border-radius:12px; background:#f0fdf4; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+                        <input type="hidden" name="delivery_method" id="delivery_method" value="home">
+                        <div class="delivery-option" onclick="selectOption('delivery', 'home', this)" style="padding:16px; border:2px solid #10b981; border-radius:12px; background:#f0fdf4; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
                             <div style="display:flex; align-items:center; gap:12px;">
-                                <div style="width:20px; height:20px; background:#10b981; border-radius:50%; border:4px solid white;"></div>
+                                <div class="radio-circle" style="width:20px; height:20px; background:#10b981; border-radius:50%; border:4px solid white; box-shadow:0 0 0 1px #10b981;"></div>
                                 <div>
                                     <div style="font-weight:600; color:#1f2937; font-size:15px;">Livraison à domicile</div>
                                     <div style="color:#6b7280; font-size:13px;">Livré dans 3-5 jours ouvrés</div>
                                 </div>
                             </div>
-                            <div style="font-weight:700; color:#16a34a; font-size:16px;">Gratuit</div>
+                            <div>
+                                <a href="#" style="font-weight:700; color:#3b82f6; font-size:15px; text-decoration:underline; z-index:10; position:relative;" onclick="event.stopPropagation();">Devis</a>
+                            </div>
                         </div>
                         
-                        <div style="padding:16px; border:2px solid #e5e7eb; border-radius:12px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;" onmouseover="this.style.borderColor='#3b82f6'" onmouseout="this.style.borderColor='#e5e7eb'">
+                        <div class="delivery-option" onclick="selectOption('delivery', 'pickup', this)" style="padding:16px; border:2px solid #e5e7eb; border-radius:12px; background:white; cursor:pointer; display:flex; justify-content:space-between; align-items:center;" onmouseover="if(this.style.borderColor !== 'rgb(16, 185, 129)') this.style.borderColor='#3b82f6'" onmouseout="if(this.style.borderColor !== 'rgb(16, 185, 129)') this.style.borderColor='#e5e7eb'">
                             <div style="display:flex; align-items:center; gap:12px;">
-                                <div style="width:20px; height:20px; background:white; border:2px solid #e5e7eb; border-radius:50%;"></div>
+                                <div class="radio-circle" style="width:20px; height:20px; background:white; border-radius:50%; border:2px solid #e5e7eb; transition:all 0.2s;"></div>
                                 <div>
                                     <div style="font-weight:600; color:#1f2937; font-size:15px;">Retrait en atelier</div>
                                     <div style="color:#6b7280; font-size:13px;">Disponible dès fabrication terminée</div>
@@ -123,43 +125,47 @@
 
                 <!-- Payment Method -->
                 <div style="background:white; border-radius:16px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,0.08); border:1px solid #e5e7eb;">
-                    <h2 style="font-size:18px; font-weight:700; color:#1f2937; margin:0 0 20px 0;">💳 Mode de paiement</h2>
+                    <div style="display:flex; align-items:center; margin-bottom:20px;">
+                        <h2 style="font-size:18px; font-weight:700; color:#1f2937; margin:0;">💳 Mode de paiement</h2>
+                        <span style="font-size:11px; font-weight:600; background:#fef3c7; color:#d97706; padding:4px 8px; border-radius:12px; margin-left:12px; border:1px solid #fde68a;">Bientôt disponible</span>
+                    </div>
                     
                     <div style="display:grid; gap:12px;">
-                        <div style="padding:16px; border:2px solid #10b981; border-radius:12px; background:#f0fdf4; cursor:pointer; display:flex; justify-content:space-between; align-items:center;">
+                        <input type="hidden" name="payment_method" id="payment_method" value="pending">
+                        <div style="padding:16px; border:2px solid #e5e7eb; border-radius:12px; background:#f9fafb; cursor:not-allowed; opacity:0.6; display:flex; justify-content:space-between; align-items:center;">
                             <div style="display:flex; align-items:center; gap:12px;">
-                                <div style="width:20px; height:20px; background:#10b981; border-radius:50%; border:4px solid white;"></div>
+                                <div style="width:20px; height:20px; background:white; border-radius:50%; border:2px solid #d1d5db;"></div>
                                 <div>
-                                    <div style="font-weight:600; color:#1f2937; font-size:15px;">Mobile Money</div>
-                                    <div style="color:#6b7280; font-size:13px;">Orange Money / MTN MoMo</div>
+                                    <div style="font-weight:600; color:#4b5563; font-size:15px;">Mobile Money</div>
+                                    <div style="color:#9ca3af; font-size:13px;">Orange Money / MTN MoMo</div>
                                 </div>
                             </div>
                             <div style="display:flex; gap:8px;">
-                                <span style="font-size:24px;">🟠</span>
-                                <span style="font-size:24px;">🟡</span>
+                                <span style="font-size:24px; filter: grayscale(100%);">🟠</span>
+                                <span style="font-size:24px; filter: grayscale(100%);">🟡</span>
                             </div>
                         </div>
                         
-                        <div style="padding:16px; border:2px solid #e5e7eb; border-radius:12px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;" onmouseover="this.style.borderColor='#3b82f6'" onmouseout="this.style.borderColor='#e5e7eb'">
+                        <div style="padding:16px; border:2px solid #e5e7eb; border-radius:12px; background:#f9fafb; cursor:not-allowed; opacity:0.6; display:flex; justify-content:space-between; align-items:center;">
                             <div style="display:flex; align-items:center; gap:12px;">
-                                <div style="width:20px; height:20px; background:white; border:2px solid #e5e7eb; border-radius:50%;"></div>
+                                <div style="width:20px; height:20px; background:white; border-radius:50%; border:2px solid #d1d5db;"></div>
                                 <div>
-                                    <div style="font-weight:600; color:#1f2937; font-size:15px;">Virement bancaire</div>
-                                    <div style="color:#6b7280; font-size:13px;">Transfert direct vers notre compte</div>
+                                    <div style="font-weight:600; color:#4b5563; font-size:15px;">Virement bancaire</div>
+                                    <div style="color:#9ca3af; font-size:13px;">Transfert direct vers notre compte</div>
                                 </div>
                             </div>
-                            <span style="font-size:24px;">🏦</span>
+                            <span style="font-size:24px; filter: grayscale(100%);">🏦</span>
                         </div>
 
-                        <div style="padding:16px; border:2px solid #e5e7eb; border-radius:12px; cursor:pointer; display:flex; justify-content:space-between; align-items:center;" onmouseover="this.style.borderColor='#3b82f6'" onmouseout="this.style.borderColor='#e5e7eb'">
+                        <div style="padding:16px; border:2px solid #e5e7eb; border-radius:12px; background:#f9fafb; cursor:not-allowed; opacity:0.6; display:flex; justify-content:space-between; align-items:center;">
                             <div style="display:flex; align-items:center; gap:12px;">
-                                <div style="width:20px; height:20px; background:white; border:2px solid #e5e7eb; border-radius:50%;"></div>
+                                <div style="width:20px; height:20px; background:white; border-radius:50%; border:2px solid #d1d5db;"></div>
                                 <div>
-                                    <div style="font-weight:600; color:#1f2937; font-size:15px;">Espèces</div>
-                                    <div style="color:#6b7280; font-size:13px;">Paiement à la livraison</div>
+                                    <div style="font-weight:600; color:#4b5563; font-size:15px;">Espèces</div>
+                                    <div style="color:#9ca3af; font-size:13px;">Paiement à la livraison</div>
                                 </div>
                             </div>
-                            <span style="font-size:24px;">💵</span>
+                            <span style="font-size:24px; filter: grayscale(100%);">💵</span>
                         </div>
                     </div>
                 </div>
@@ -173,42 +179,35 @@
                     
                     <!-- Items Summary -->
                     <div style="margin-bottom:20px;">
+                        @foreach($cartItems as $item)
                         <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:14px;">
-                            <span style="color:#6b7280;">Chaise en bois de chêne (x2)</span>
-                            <span style="font-weight:600; color:#1f2937;">90,000 FCFA</span>
+                            <span style="color:#6b7280;">{{ $item->product->name }} (x{{ $item->quantity }})
+                                @if($item->customization)
+                                    <br><small style="color:#9ca3af;">Sur mesure</small>
+                                @endif
+                            </span>
+                            <span style="font-weight:600; color:#1f2937;">{{ number_format($item->unit_price * $item->quantity, 0, ',', ' ') }} FCFA</span>
                         </div>
-                        <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:14px;">
-                            <span style="color:#6b7280;">Bibliothèque sur mesure (x1)</span>
-                            <span style="font-weight:600; color:#1f2937;">120,000 FCFA</span>
-                        </div>
-                        <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:14px;">
-                            <span style="color:#6b7280;">Table basse personnalisée (x1)</span>
-                            <span style="font-weight:600; color:#1f2937;">85,000 FCFA</span>
-                        </div>
+                        @endforeach
                     </div>
 
                     <div style="border-top:1px solid #e5e7eb; margin:16px 0;"></div>
 
                     <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:15px;">
                         <span style="color:#6b7280;">Sous-total</span>
-                        <span style="font-weight:600; color:#1f2937;">295,000 FCFA</span>
+                        <span style="font-weight:600; color:#1f2937;">{{ number_format($total, 0, ',', ' ') }} FCFA</span>
                     </div>
                     
                     <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:15px;">
                         <span style="color:#6b7280;">Livraison</span>
-                        <span style="font-weight:600; color:#16a34a;">Gratuite</span>
-                    </div>
-
-                    <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:15px;">
-                        <span style="color:#6b7280;">Remise</span>
-                        <span style="font-weight:600; color:#dc2626;">-25,000 FCFA</span>
+                        <span style="font-weight:600; color:#16a34a;">À calculer</span>
                     </div>
 
                     <div style="border-top:1px solid #e5e7eb; margin:16px 0;"></div>
 
                     <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
-                        <span style="font-size:18px; font-weight:700; color:#1f2937;">Total</span>
-                        <span style="font-size:24px; font-weight:700; color:#1f2937;">270,000 FCFA</span>
+                        <span style="font-size:18px; font-weight:700; color:#1f2937;">Total estimé</span>
+                        <span style="font-size:24px; font-weight:700; color:#1f2937;">{{ number_format($total, 0, ',', ' ') }} FCFA</span>
                     </div>
 
                     <!-- Terms -->
@@ -234,4 +233,36 @@
         </div>
     </div>
 </div>
+
+<script>
+    function selectOption(groupName, value, element) {
+        // Set the hidden input value
+        document.getElementById(groupName + '_method').value = value;
+        
+        // Reset all visual states in the group
+        const options = document.querySelectorAll('.' + groupName + '-option');
+        options.forEach(opt => {
+            opt.style.borderColor = '#e5e7eb';
+            opt.style.background = 'white';
+            const radioCircle = opt.querySelector('.radio-circle');
+            if(radioCircle) {
+                radioCircle.style.background = 'white';
+                radioCircle.style.borderColor = '#e5e7eb';
+                radioCircle.style.boxShadow = 'none';
+                radioCircle.style.borderWidth = '2px';
+            }
+        });
+        
+        // Set active visual state
+        element.style.borderColor = '#10b981';
+        element.style.background = '#f0fdf4';
+        const activeRadio = element.querySelector('.radio-circle');
+        if(activeRadio) {
+            activeRadio.style.background = '#10b981';
+            activeRadio.style.borderColor = 'white';
+            activeRadio.style.boxShadow = '0 0 0 1px #10b981';
+            activeRadio.style.borderWidth = groupName === 'address' ? '3px' : '4px';
+        }
+    }
+</script>
 @endsection
