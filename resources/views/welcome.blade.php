@@ -924,6 +924,88 @@
         </div>
     </section>
 
+    <!-- Contact Form Section -->
+    <section class="py-20 bg-gradient-to-br from-blue-50 to-gray-100 items-center">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 xl:px-16">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-blue-900 mb-4">Contactez-nous</h2>
+                <p class="text-xl text-gray-800 max-w-3xl mx-auto">
+                    Nous sommes à votre écoute pour tous vos projets de menuiserie
+                </p>
+            </div>
+
+            <div class="max-w-2xl mx-auto flex items-center justify-center">
+                
+                <form action="" method="POST" class="bg-white rounded-2xl shadow-xl p-8 md:p-12 w-full">
+                    @csrf
+                    @if(session('success'))
+                        <div class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                            <ul class="list-disc list-inside">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Nom complet</label>
+                            <input type="text" id="name" name="name" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                                placeholder="Votre nom">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+                            <input type="email" id="email" name="email" required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                                placeholder="votre@email.com">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="phone" class="block text-sm font-semibold text-gray-700 mb-2">Téléphone</label>
+                        <input type="tel" id="phone" name="phone"
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                            placeholder="+237 6XX XXX XXX">
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="subject" class="block text-sm font-semibold text-gray-700 mb-2">Sujet</label>
+                        <select id="subject" name="subject" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all">
+                            <option value="">Sélectionnez un sujet</option>
+                            <option value="menuiserie">Menuiserie sur mesure</option>
+                            <option value="renovation">Rénovation</option>
+                            <option value="conseil">Conseil expert</option>
+                            <option value="pompes_funebres">Pompes funèbres</option>
+                            <option value="devis">Demande de devis</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-6">
+                        <label for="message" class="block text-sm font-semibold text-gray-700 mb-2">Message</label>
+                        <textarea id="message" name="message" rows="5" required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all resize-none"
+                            placeholder="Décrivez votre projet ou votre demande..."></textarea>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-6 rounded-lg font-semibold hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-[1.02] shadow-lg hover:shadow-xl">
+                        Envoyer le message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
     <footer id="contact" class="bg-gray-900 text-white py-12 footer-section">
         <div class="footer-container">

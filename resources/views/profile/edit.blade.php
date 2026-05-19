@@ -1,168 +1,129 @@
+@extends('layouts.dashboard')
+
+@section('title', 'Modifier mon profil')
+@section('subtitle', 'Mettre à jour vos informations personnelles')
+
+@php
+    $avatarUrl = $user->avatar
+        ? asset('storage/'.$user->avatar)
+        : 'https://ui-avatars.com/api/?name='.urlencode($user->name).'&background=1e40af&color=fff&size=256';
+@endphp
+
 @section('content')
-<div id="profile-edit">
-    <div style="padding:24px; max-width:800px; margin:0 auto;">
-        
-        <!-- Header -->
+    <div id="profile-edit" style="max-width:800px; margin:0 auto;">
+        @include('layouts.partials.alerts')
+
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
             <div>
-                <h1 style="font-size:24px; font-weight:700; color:#1f2937; margin:0;">
-                    Modifier mon profil
-                </h1>
-                <p style="color:#6b7280; margin:4px 0 0;">
-                    Mettre à jour vos informations personnelles
-                </p>
+                <h1 style="font-size:24px; font-weight:700; color:#1f2937; margin:0;">Modifier mon profil</h1>
+                <p style="color:#6b7280; margin:4px 0 0;">Mettre à jour vos informations personnelles</p>
             </div>
-            <a href="{{ route('dashboard') }}"
-                style="display:flex; align-items:center; gap:8px;
-                       padding:10px 18px; background:#6b7280;
-                       color:white; border:none; border-radius:8px;
-                       font-size:14px; font-weight:500; cursor:pointer; text-decoration:none;">
-                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
-                </svg>
-                Retour
+            <a href="{{ route('profile.index') }}"
+                style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; background:#6b7280; color:white; border-radius:8px; font-size:14px; font-weight:500; text-decoration:none;">
+                ← Retour au profil
             </a>
         </div>
 
-        <!-- Profile Edit Form -->
-        <div style="background:white; border-radius:12px; padding:32px; box-shadow:0 4px 6px rgba(0,0,0,0.05); border:1px solid #e5e7eb;">
-            <form id="profileEditForm" onsubmit="saveProfile(event)">
-                <!-- Avatar Section -->
-                <div style="text-align:center; margin-bottom:32px;">
-                    <div style="position:relative; display:inline-block;">
-                        <img id="avatarPreview" src="https://ui-avatars.com/api/?name=Jean Dupont&background=1e3a8a&color=fff" 
-                             alt="Avatar" style="width:120px; height:120px; border-radius:50%; border:4px solid #e5e7eb;">
-                        <button type="button" onclick="document.getElementById('avatarInput').click()" 
-                                style="position:absolute; bottom:0; right:0; background:#3b82f6; color:white; 
-                                       border:2px solid white; border-radius:50%; width:36px; height:36px; 
-                                       cursor:pointer; display:flex; align-items:center; justify-content:center;">
-                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h.93a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                            </svg>
-                        </button>
-                        <input type="file" id="avatarInput" accept="image/*" style="display:none;" onchange="previewAvatar(event)">
-                    </div>
-                    <p style="margin-top:12px; color:#6b7280; font-size:14px;">
-                        Cliquez sur l'icône pour changer votre photo
-                    </p>
+        {{-- Avatar --}}
+        <div style="background:white; border-radius:12px; padding:24px; margin-bottom:24px; border:1px solid #e5e7eb; text-align:center;">
+            <img src="{{ $avatarUrl }}" alt="Avatar" id="avatarPreview"
+                style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:4px solid #e5e7eb;">
+            <form action="{{ route('profile.avatar') }}" method="POST" enctype="multipart/form-data" style="margin-top:16px;">
+                @csrf
+                <label style="display:inline-block; padding:8px 16px; background:#3b82f6; color:white; border-radius:8px; font-size:14px; font-weight:500; cursor:pointer;">
+                    Changer la photo
+                    <input type="file" name="avatar" accept="image/*" style="display:none;" onchange="this.form.submit()">
+                </label>
+            </form>
+        </div>
+
+        {{-- Informations --}}
+        <div style="background:white; border-radius:12px; padding:32px; border:1px solid #e5e7eb;">
+            <form action="{{ route('profile.update') }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <h3 style="font-size:18px; font-weight:600; color:#1f2937; margin:0 0 20px; padding-bottom:12px; border-bottom:1px solid #e5e7eb;">
+                    Informations personnelles
+                </h3>
+
+                <div style="margin-bottom:20px;">
+                    <label for="name" style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">Nom complet *</label>
+                    <input type="text" id="name" name="name" value="{{ old('name', $user->name) }}" required
+                        style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; font-size:14px; box-sizing:border-box;">
                 </div>
 
-                <!-- Personal Information -->
-                <div style="margin-bottom:32px;">
-                    <h3 style="font-size:18px; font-weight:600; color:#1f2937; margin:0 0 20px; padding-bottom:12px; border-bottom:1px solid #e5e7eb;">
-                        Informations personnelles
-                    </h3>
-                    
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
-                        <div>
-                            <label style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">
-                                Nom
-                            </label>
-                            <input type="text" id="lastName" value="Dupont" required
-                                   style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; 
-                                          font-size:14px; transition:border-color 0.2s;"
-                                   onfocus="this.style.borderColor='#3b82f6'" 
-                                   onblur="this.style.borderColor='#d1d5db'">
-                        </div>
-                        <div>
-                            <label style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">
-                                Prénom
-                            </label>
-                            <input type="text" id="firstName" value="Jean" required
-                                   style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; 
-                                          font-size:14px; transition:border-color 0.2s;"
-                                   onfocus="this.style.borderColor='#3b82f6'" 
-                                   onblur="this.style.borderColor='#d1d5db'">
-                        </div>
-                    </div>
-
-                    <div style="margin-bottom:20px;">
-                        <label style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">
-                            Email
-                        </label>
-                        <input type="email" id="email" value="jean.dupont@dollars-menuiserie.com" required
-                               style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; 
-                                      font-size:14px; transition:border-color 0.2s;"
-                               onfocus="this.style.borderColor='#3b82f6'" 
-                               onblur="this.style.borderColor='#d1d5db'">
-                    </div>
-
-                    <div style="margin-bottom:20px;">
-                        <label style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">
-                            Téléphone
-                        </label>
-                        <input type="tel" id="phone" value="+33 6 12 34 56 78" 
-                               style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; 
-                                      font-size:14px; transition:border-color 0.2s;"
-                               onfocus="this.style.borderColor='#3b82f6'" 
-                               onblur="this.style.borderColor='#d1d5db'">
-                    </div>
-
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
                     <div>
-                        <label style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">
-                            Adresse
-                        </label>
-                        <textarea id="address" rows="3" 
-                                  style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; 
-                                         font-size:14px; resize:vertical; transition:border-color 0.2s;"
-                                  onfocus="this.style.borderColor='#3b82f6'" 
-                                  onblur="this.style.borderColor='#d1d5db'">123 Rue de l'Industrie, 75001 Paris</textarea>
+                        <label for="email" style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">Email *</label>
+                        <input type="email" id="email" name="email" value="{{ old('email', $user->email) }}" required
+                            style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; font-size:14px; box-sizing:border-box;">
+                    </div>
+                    <div>
+                        <label for="phone" style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">Téléphone</label>
+                        <input type="tel" id="phone" name="phone" value="{{ old('phone', $user->phone) }}"
+                            style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; font-size:14px; box-sizing:border-box;">
                     </div>
                 </div>
 
-                <!-- Password Section -->
-                <div style="margin-bottom:32px;">
-                    <h3 style="font-size:18px; font-weight:600; color:#1f2937; margin:0 0 20px; padding-bottom:12px; border-bottom:1px solid #e5e7eb;">
-                        Mot de passe
-                    </h3>
-                    
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;">
-                        <div>
-                            <label style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">
-                                Nouveau mot de passe
-                            </label>
-                            <input type="password" id="newPassword" 
-                                   style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; 
-                                          font-size:14px; transition:border-color 0.2s;"
-                                   onfocus="this.style.borderColor='#3b82f6'" 
-                                   onblur="this.style.borderColor='#d1d5db'"
-                                   placeholder="Laisser vide pour ne pas changer">
-                        </div>
-                        <div>
-                            <label style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">
-                                Confirmer le mot de passe
-                            </label>
-                            <input type="password" id="confirmPassword" 
-                                   style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; 
-                                          font-size:14px; transition:border-color 0.2s;"
-                                   onfocus="this.style.borderColor='#3b82f6'" 
-                                   onblur="this.style.borderColor='#d1d5db'"
-                                   placeholder="Laisser vide pour ne pas changer">
-                        </div>
+                <h3 style="font-size:18px; font-weight:600; color:#1f2937; margin:24px 0 20px; padding-bottom:12px; border-bottom:1px solid #e5e7eb;">
+                    Adresse
+                </h3>
+
+                <div style="margin-bottom:20px;">
+                    <label for="street" style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">Rue</label>
+                    <input type="text" id="street" name="street" value="{{ old('street', $defaultAddress?->street) }}"
+                        style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; font-size:14px; box-sizing:border-box;">
+                </div>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin-bottom:20px;">
+                    <div>
+                        <label for="city" style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">Ville</label>
+                        <input type="text" id="city" name="city" value="{{ old('city', $defaultAddress?->city) }}"
+                            style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; font-size:14px; box-sizing:border-box;">
+                    </div>
+                    <div>
+                        <label for="postal_code" style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">Code postal</label>
+                        <input type="text" id="postal_code" name="postal_code" value="{{ old('postal_code', $defaultAddress?->postal_code) }}"
+                            style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; font-size:14px; box-sizing:border-box;">
+                    </div>
+                    <div>
+                        <label for="country" style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">Pays</label>
+                        <input type="text" id="country" name="country" value="{{ old('country', $defaultAddress?->country ?? 'Cameroun') }}"
+                            style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; font-size:14px; box-sizing:border-box;">
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
+                <h3 style="font-size:18px; font-weight:600; color:#1f2937; margin:24px 0 20px; padding-bottom:12px; border-bottom:1px solid #e5e7eb;">
+                    Mot de passe
+                </h3>
+
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:24px;">
+                    <div>
+                        <label for="password" style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">Nouveau mot de passe</label>
+                        <input type="password" id="password" name="password" autocomplete="new-password"
+                            placeholder="Laisser vide pour ne pas changer"
+                            style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; font-size:14px; box-sizing:border-box;">
+                    </div>
+                    <div>
+                        <label for="password_confirmation" style="display:block; margin-bottom:8px; font-weight:500; color:#374151; font-size:14px;">Confirmer</label>
+                        <input type="password" id="password_confirmation" name="password_confirmation" autocomplete="new-password"
+                            placeholder="Confirmer le nouveau mot de passe"
+                            style="width:100%; padding:12px; border:1px solid #d1d5db; border-radius:8px; font-size:14px; box-sizing:border-box;">
+                    </div>
+                </div>
+
                 <div style="display:flex; gap:15px; justify-content:flex-end; padding-top:24px; border-top:1px solid #e5e7eb;">
-                    <a href="{{ route('dashboard') }}"
-                            style="display:inline-flex; align-items:center; justify-content:center;
-                                   padding:12px 28px; background:#6b7280;
-                                   color:white; border:none; border-radius:8px;
-                                   font-size:15px; font-weight:600; cursor:pointer; text-decoration:none;">
+                    <a href="{{ route('profile.index') }}"
+                        style="padding:12px 28px; background:#6b7280; color:white; border-radius:8px; font-size:15px; font-weight:600; text-decoration:none;">
                         Annuler
                     </a>
-                    <button type="submit" 
-                            style="padding:12px 28px; background:linear-gradient(135deg, #3b82f6, #2563eb);
-                                   color:white; border:none; border-radius:8px;
-                                   font-size:15px; font-weight:600; cursor:pointer;
-                                   box-shadow:0 4px 12px rgba(59,130,246,0.3);">
-                        💾 Enregistrer les modifications
+                    <button type="submit"
+                        style="padding:12px 28px; background:linear-gradient(135deg, #3b82f6, #2563eb); color:white; border:none; border-radius:8px; font-size:15px; font-weight:600; cursor:pointer;">
+                        Enregistrer les modifications
                     </button>
                 </div>
             </form>
         </div>
     </div>
-</div>
-
 @endsection

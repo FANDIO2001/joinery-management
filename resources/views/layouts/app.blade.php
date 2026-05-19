@@ -24,7 +24,7 @@
 </head>
 <body class="bg-white text-gray-900 antialiased">
     @include('layouts.partials.nav')
-    <main class="min-h-screen">
+    <main class="min-h-screen pt-16">
         @include('layouts.partials.alerts')
         @yield('content')
     </main>

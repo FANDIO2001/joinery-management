@@ -24,8 +24,8 @@
             <div style="flex:1; height:4px; background:#10b981; border-radius:2px;"></div>
         </div>
 
-        <div style="display:grid; grid-template-columns:1fr 380px; gap:32px;">
-            
+        <form action="{{ route('shop.checkout.process') }}" method="POST" style="display:grid; grid-template-columns:1fr 380px; gap:32px;">
+            @csrf
             <!-- Checkout Form -->
             <div>
                 
@@ -219,7 +219,7 @@
                     </div>
 
                     <!-- Place Order Button -->
-                    <button style="display:block; width:100%; padding:14px 20px; background:linear-gradient(135deg, #10b981, #059669); color:white; border:none; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 12px rgba(16,185,129,0.3);">
+                    <button type="submit" style="display:block; width:100%; padding:14px 20px; background:linear-gradient(135deg, #10b981, #059669); color:white; border:none; border-radius:8px; font-size:16px; font-weight:600; cursor:pointer; box-shadow:0 4px 12px rgba(16,185,129,0.3);">
                         ✅ Confirmer la commande
                     </button>
 
@@ -229,8 +229,7 @@
                     </div>
                 </div>
             </div>
-
-        </div>
+        </form>
     </div>
 </div>
 

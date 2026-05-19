@@ -2,13 +2,44 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class InvoiceController extends Controller
 {
-    public function index()
+    public function index(Request $request): View
     {
-        return view('invoices.index');
+        $query = Invoice::query()
+            ->with(['order.client'])
+            ->latest();
+
+        if ($request->filled('search')) {
+            $search = $request->string('search')->trim();
+            $query->where(function ($q) use ($search) {
+                $q->where('invoice_number', 'like', "%{$search}%")
+                    ->orWhereHas('order.client', fn ($client) => $client->where('name', 'like', "%{$search}%"));
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->string('status'));
+        }
+
+        if ($request->filled('period')) {
+            $period = $request->string('period');
+            $query->whereBetween('invoice_date', match ($period) {
+                'today' => [now()->startOfDay(), now()->endOfDay()],
+                'week' => [now()->startOfWeek(), now()->endOfWeek()],
+                'month' => [now()->startOfMonth(), now()->endOfMonth()],
+                'year' => [now()->startOfYear(), now()->endOfYear()],
+                default => [now()->subYears(10), now()],
+            });
+        }
+
+        $invoices = $query->paginate(15)->withQueryString();
+
+        return view('invoices.index', compact('invoices'));
     }
 
     public function create()
@@ -31,9 +62,11 @@ class InvoiceController extends Controller
         return redirect()->route('invoices.index')->with('success', 'Invoice created successfully');
     }
 
-    public function show($id)
+    public function show($id): View
     {
-        return view('invoices.show');
+        $invoice = Invoice::with(['order.client', 'order.items.product'])->findOrFail($id);
+
+        return view('invoices.show', compact('invoice'));
     }
 
     public function pdf($id)

@@ -46,14 +46,13 @@ Route::post('reset-password', [AuthController::class, 'resetStore'])->name('pass
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');// a ne pas toucher
 Route::get('users', [UserController::class, 'index'])->name('users.index');// a ne pas toucher
 Route::get('users/create', [UserController::class, 'create'])->name('users.create');// a ne pas toucher
-Route::post('users', [UserController::class, 'store'])->name('users.store');
 
 // Dashboard
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('tableau-de-bord', [DashboardController::class, 'index'])->name('dashboard.fr');
 
 // Profile Routes
-Route::prefix('profile')->name('profile.')->group(function () {
+Route::middleware('auth')->prefix('profile')->name('profile.')->group(function () {
     Route::get('/', [ProfileController::class, 'index'])->name('index');
     Route::get('/edit', [ProfileController::class, 'edit'])->name('edit');
     Route::put('/update', [ProfileController::class, 'update'])->name('update');
@@ -65,6 +64,7 @@ Route::prefix('customer')->name('customer.')->group(function () {
     Route::get('dashboard', [CustomerPortalController::class, 'dashboard'])->name('dashboard');
     Route::get('profile', [CustomerPortalController::class, 'profile'])->name('profile');
     Route::get('addresses', [CustomerPortalController::class, 'addresses'])->name('addresses');
+    Route::get('products', [CustomerPortalController::class, 'products'])->name('products.index');
     Route::resource('orders', CustomerOrderController::class)->only(['index', 'show']);
 });
 
@@ -73,6 +73,9 @@ Route::resource('customers', CustomerController::class);
 Route::resource('employees', EmployeeController::class);
 Route::resource('products', ProductController::class);
 Route::resource('orders', OrderController::class);
+Route::post('orders/{id}/generate-invoice', [OrderController::class, 'generateInvoice'])->name('orders.generateInvoice');
+Route::post('orders/{id}/send-confirmation', [OrderController::class, 'sendConfirmation'])->name('orders.sendConfirmation');
+Route::post('orders/{id}/cancel', [OrderController::class, 'cancelOrder'])->name('orders.cancel');
 Route::resource('quotes', QuoteController::class);
 Route::resource('invoices', InvoiceController::class)->only(['index', 'create', 'store', 'show']);
 Route::resource('stocks', StockController::class);
@@ -140,6 +143,7 @@ Route::prefix('shop')->name('shop.')->group(function () {
         Route::patch('cart/{cartItem}', [CartController::class, 'update'])->name('cart.update');
         Route::delete('cart/{cartItem}', [CartController::class, 'remove'])->name('cart.remove');
         Route::get('checkout', [CheckoutController::class, 'index'])->name('checkout');
+        Route::post('checkout', [CheckoutController::class, 'process'])->name('checkout.process');
     });
     
     // Parameter routes must come after static routes

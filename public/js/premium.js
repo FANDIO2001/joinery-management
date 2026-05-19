@@ -1,5 +1,12 @@
 // DOLLARS MENUISERIE - Premium JavaScript
 
+function toggleAppMobileMenu() {
+    const mobileMenu = document.getElementById('app-mobile-menu');
+    if (mobileMenu) {
+        mobileMenu.classList.toggle('hidden');
+    }
+}
+
 // Navbar scroll effect
 document.addEventListener('DOMContentLoaded', function() {
     const navbar = document.getElementById('navbar');
