@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\CartItem;
+use App\Support\OrderCustomization;
+use App\Support\OrderStatus;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
@@ -55,12 +57,25 @@ class CheckoutController extends Controller
         // Map delivery type
         $deliveryType = $request->delivery_method === 'pickup' ? 'pickup' : 'delivery';
 
+        // Vérifier si la commande contient des articles avec dimensions personnalisées
+        $hasCustomizations = $cartItems->some(function ($item) {
+            $customization = is_string($item->customization) ? json_decode($item->customization, true) : $item->customization;
+            return !empty($customization) && (
+                isset($customization['custom_width']) || 
+                isset($customization['custom_height']) || 
+                isset($customization['dimension'])
+            );
+        });
+
+        // Si la commande a des dimensions personnalisées, mettre le statut à 'pending_quote'
+        $status = $hasCustomizations ? 'pending_quote' : 'pending';
+
         // Create the order
         $order = \App\Models\Order::create([
             'reference' => 'CMD-' . strtoupper(uniqid()),
             'client_id' => auth()->id(),
             'address_id' => $address->id,
-            'status' => 'pending',
+            'status' => $status,
             'subtotal' => $total,
             'discount_amount' => 0,
             'delivery_fee' => 0,
@@ -87,8 +102,12 @@ class CheckoutController extends Controller
         // Clear cart
         CartItem::where('user_id', auth()->id())->delete();
 
-        // Redirect to success/order tracking page
-        return redirect()->route('customer.orders.show', $order->id)
-            ->with('success', 'Votre commande a été confirmée avec succès !');
+        $message = $hasCustomizations
+            ? 'Votre commande sur mesure a été enregistrée. Un devis vous sera proposé sous peu.'
+            : 'Votre commande a été confirmée avec succès !';
+
+        return redirect()
+            ->route('customer.orders.show', $order->id)
+            ->with('success', $message);
     }
 }

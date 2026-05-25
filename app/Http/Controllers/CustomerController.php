@@ -6,9 +6,27 @@ use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('customers.index');
+        $query = \App\Models\User::where('user_type', 'client')->withCount('orders');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('phone', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('status')) {
+            $status = $request->status === 'active';
+            $query->where('is_active', $status);
+        }
+
+        $customers = $query->paginate(10)->withQueryString();
+
+        return view('customers.index', compact('customers'));
     }
 
     public function create()
@@ -32,7 +50,8 @@ class CustomerController extends Controller
 
     public function show($id)
     {
-        return view('customers.show');
+        $customer = \App\Models\User::with(['orders', 'clientAddresses', 'tickets'])->findOrFail($id);
+        return view('customers.show', compact('customer'));
     }
 
     public function edit($id)

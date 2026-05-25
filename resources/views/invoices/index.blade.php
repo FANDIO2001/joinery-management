@@ -132,10 +132,10 @@
                             style="padding:6px 12px; background:#3b82f6; color:white; border:none; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; text-decoration:none;">
                             👁️ Voir
                         </a>
-                        <a href="#"
+                        <button onclick="window.open('{{ route('invoices.pdf', $invoice->id) }}', '_blank')"
                             style="padding:6px 12px; background:#10b981; color:white; border:none; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; text-decoration:none;">
                             📄 PDF
-                        </a>
+                        </button>
                     </div>
                 </div>
                 @empty

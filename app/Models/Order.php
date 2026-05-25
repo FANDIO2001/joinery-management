@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use App\Support\OrderCustomization;
 
 class Order extends Model
 {
@@ -67,6 +68,11 @@ class Order extends Model
         return $this->hasOne(Invoice::class);
     }
 
+    public function quote(): HasOne
+    {
+        return $this->hasOne(Quote::class);
+    }
+
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class);
@@ -85,5 +91,26 @@ class Order extends Model
     public function createdBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function requiresQuote(): bool
+    {
+        return $this->status === 'pending_quote'
+            || $this->status === 'quote_sent'
+            || $this->items->contains(
+                fn ($item) => OrderCustomization::hasPersonalizedDimensions($item->customization)
+            );
+    }
+
+    public function awaitingQuoteCreation(): bool
+    {
+        return $this->status === 'pending_quote' && ! $this->quote;
+    }
+
+    public function awaitingQuoteApproval(): bool
+    {
+        return $this->status === 'quote_sent'
+            && $this->quote
+            && $this->quote->status === 'sent';
     }
 }

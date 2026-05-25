@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeLeaveController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProductionCalendarController;
@@ -73,11 +74,21 @@ Route::resource('customers', CustomerController::class);
 Route::resource('employees', EmployeeController::class);
 Route::resource('products', ProductController::class);
 Route::resource('orders', OrderController::class);
+Route::post('orders/{id}/confirm', [OrderController::class, 'confirmOrder'])->name('orders.confirm');
 Route::post('orders/{id}/generate-invoice', [OrderController::class, 'generateInvoice'])->name('orders.generateInvoice');
 Route::post('orders/{id}/send-confirmation', [OrderController::class, 'sendConfirmation'])->name('orders.sendConfirmation');
 Route::post('orders/{id}/cancel', [OrderController::class, 'cancelOrder'])->name('orders.cancel');
-Route::resource('quotes', QuoteController::class);
+Route::middleware('auth')->group(function () {
+    Route::resource('quotes', QuoteController::class)->except(['create', 'store']);
+    Route::get('orders/{order}/quotes/create', [QuoteController::class, 'createForOrder'])->name('quotes.create');
+    Route::post('orders/{order}/quotes', [QuoteController::class, 'storeForOrder'])->name('quotes.store');
+    Route::post('quotes/{quote}/send', [QuoteController::class, 'send'])->name('quotes.send');
+    Route::post('quotes/{quote}/approve', [QuoteController::class, 'approve'])->name('quotes.approve');
+    Route::post('quotes/{quote}/reject', [QuoteController::class, 'reject'])->name('quotes.reject');
+    Route::get('quotes/{quote}/pdf', [QuoteController::class, 'pdf'])->name('quotes.pdf');
+});
 Route::resource('invoices', InvoiceController::class)->only(['index', 'create', 'store', 'show']);
+Route::get('invoices/{id}/pdf', [InvoiceController::class, 'pdf'])->name('invoices.pdf');
 Route::resource('stocks', StockController::class);
 
 // Nested Resources
@@ -129,8 +140,13 @@ Route::prefix('sav')->name('sav.')->group(function () {
     Route::get('/', [ReportController::class, 'index'])->name('index');
 });
 
-Route::prefix('notifications')->name('notifications.')->group(function () {
-    Route::get('/', [ReportController::class, 'index'])->name('index');
+Route::prefix('notifications')->name('notifications.')->middleware('auth')->group(function () {
+    Route::get('/', [NotificationController::class, 'index'])->name('index');
+    Route::post('/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('markAsRead');
+    Route::post('/mark-all-as-read', [NotificationController::class, 'markAllAsRead'])->name('markAllAsRead');
+    Route::delete('/{id}', [NotificationController::class, 'destroy'])->name('destroy');
+    Route::delete('/', [NotificationController::class, 'destroyAll'])->name('destroyAll');
+    Route::get('/unread/count', [NotificationController::class, 'unreadCount'])->name('unreadCount');
 });
 
 // Shop (Public/Customer)
@@ -153,4 +169,3 @@ Route::prefix('shop')->name('shop.')->group(function () {
 
 // PDF Routes
 Route::get('invoices/{invoice}/pdf', [InvoiceController::class, 'pdf'])->name('invoices.pdf');
-Route::get('quotes/{quote}/pdf', [QuoteController::class, 'pdf'])->name('quotes.pdf');

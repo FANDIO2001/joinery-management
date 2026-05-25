@@ -1,4 +1,5 @@
 @extends('layouts.dashboard')
+@php use App\Support\OrderStatus; @endphp
 @section('title', 'Commandes')
 @section('subtitle', 'Détails de la commande')
 @section('content')
@@ -271,8 +272,25 @@
                                 <div
                                     style="width:8px; height:8px; background:{{ $order->status === 'confirmed' ? '#3b82f6' : ($order->status === 'delivered' ? '#10b981' : '#f59e0b') }}; border-radius:50%;">
                                 </div>
-                                {{ ucfirst($order->status === 'confirmed' ? 'En cours' : ($order->status === 'delivered' ? 'Livré' : 'En attente')) }}
+                                {{ OrderStatus::meta($order->status)['label'] }}
                             </span>
+
+                            @if ($order->status === 'confirmed' && $order->confirmed_at)
+                                <div
+                                    style="margin-top:12px; padding:12px; background:#f0fdf4; border-left:3px solid #10b981; border-radius:4px;">
+                                    <div style="font-size:12px; color:#059669; font-weight:600;">✓ Confirmée le</div>
+                                    <div style="font-size:13px; color:#065f46; margin-top:2px;">
+                                        {{ $order->confirmed_at->format('d/m/Y à H:i') }}</div>
+                                </div>
+                            @elseif($order->status === 'pending')
+                                <div
+                                    style="margin-top:12px; padding:12px; background:#fef3c7; border-left:3px solid #f59e0b; border-radius:4px;">
+                                    <div style="font-size:12px; color:#b45309; font-weight:600;">⏳ En attente de
+                                        confirmation</div>
+                                    <div style="font-size:12px; color:#92400e; margin-top:2px;">L'administrateur doit
+                                        confirmer cette commande</div>
+                                </div>
+                            @endif
                         </div>
                     </div>
 
@@ -322,7 +340,44 @@
                             </h3>
                         </div>
                         <div style="padding:0 24px 24px; display:flex; flex-direction:column; gap:12px;">
-                            <form action="{{ route('orders.generateInvoice', $order->id) }}" method="POST" style="margin:0;">
+                            @if ($order->status === 'pending' && auth()->user()?->user_type === 'admin')
+                                <button type="button"
+                                    onclick="document.getElementById('confirmModal').style.display='flex'"
+                                    style="padding:12px 16px; background:linear-gradient(135deg, #10b981, #059669); color:white; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 12px rgba(16,185,129,0.3);"
+                                    onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)'"
+                                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)'">
+                                    ✅ Confirmer la commande
+                                </button>
+                            @elseif($order->status === 'pending_quote' && !$order->quote && auth()->user()?->user_type !== 'client')
+                                <a href="{{ route('quotes.create', $order) }}"
+                                    style="padding:12px 16px; background:linear-gradient(135deg, #f59e0b, #d97706); color:white; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 12px rgba(245,158,11,0.3); width:100%; display:block; text-align:center; text-decoration:none;"
+                                    onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 16px rgba(245,158,11,0.4)'"
+                                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(245,158,11,0.3)'">
+                                    📋 Créer un Devis
+                                </a>
+                            @elseif($order->quote && $order->quote->status === 'draft' && auth()->user()?->user_type !== 'client')
+                                <a href="{{ route('quotes.show', $order->quote) }}"
+                                    style="padding:12px 16px; background:linear-gradient(135deg, #f59e0b, #d97706); color:white; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 12px rgba(245,158,11,0.3); width:100%; display:block; text-align:center; text-decoration:none;">
+                                    📋 Finaliser et envoyer le devis
+                                </a>
+                            @elseif($order->quote && $order->quote->status === 'approved')
+                                <a href="{{ route('quotes.show', $order->quote->id) }}"
+                                    style="padding:12px 16px; background:linear-gradient(135deg, #8b5cf6, #7c3aed); color:white; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 12px rgba(139,92,246,0.3); width:100%; display:block; text-align:center; text-decoration:none;"
+                                    onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 16px rgba(139,92,246,0.4)'"
+                                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(139,92,246,0.3)'">
+                                    📋 Voir le Devis Approuvé
+                                </a>
+                            @elseif($order->quote && $order->quote->status === 'sent')
+                                <a href="{{ route('quotes.show', $order->quote->id) }}"
+                                    style="padding:12px 16px; background:linear-gradient(135deg, #06b6d4, #0891b2); color:white; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 12px rgba(6,182,212,0.3); width:100%; display:block; text-align:center; text-decoration:none;"
+                                    onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 16px rgba(6,182,212,0.4)'"
+                                    onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(6,182,212,0.3)'">
+                                    📋 Devis en Attente d'Approbation
+                                </a>
+                            @endif
+
+                            <form action="{{ route('orders.generateInvoice', $order->id) }}" method="POST"
+                                style="margin:0;">
                                 @csrf
                                 <button type="submit"
                                     style="padding:12px 16px; background:linear-gradient(135deg, #10b981, #059669); color:white; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 12px rgba(16,185,129,0.3); width:100%;"
@@ -331,7 +386,8 @@
                                     📄 Générer facture
                                 </button>
                             </form>
-                            <form action="{{ route('orders.sendConfirmation', $order->id) }}" method="POST" style="margin:0;">
+                            <form action="{{ route('orders.sendConfirmation', $order->id) }}" method="POST"
+                                style="margin:0;">
                                 @csrf
                                 <button type="submit"
                                     style="padding:12px 16px; background:linear-gradient(135deg, #3b82f6, #2563eb); color:white; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 12px rgba(59,130,246,0.3); width:100%;"
@@ -340,7 +396,8 @@
                                     📧 Envoyer confirmation
                                 </button>
                             </form>
-                            <form action="{{ route('orders.cancel', $order->id) }}" method="POST" style="margin:0;" onsubmit="return confirm('Êtes-vous sûr de vouloir annuler cette commande ?');">
+                            <form action="{{ route('orders.cancel', $order->id) }}" method="POST" style="margin:0;"
+                                onsubmit="return confirm('Êtes-vous sûr de vouloir annuler cette commande ?');">
                                 @csrf
                                 <button type="submit"
                                     style="padding:12px 16px; background:linear-gradient(135deg, #ef4444, #dc2626); color:white; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 12px rgba(239,68,68,0.3); width:100%;"
@@ -376,30 +433,51 @@
                                 <div style="position:absolute; left:6px; top:0; bottom:0; width:2px; background:#e5e7eb;">
                                 </div>
                                 @forelse($order->statusHistory ?? [] as $history)
-                                    <div style="position:relative; margin-bottom:16px;">
+                                    <div style="position:relative; margin-bottom:20px;">
                                         <div
-                                            style="position:absolute; left:-14px; top:2px; width:12px; height:12px; background:{{ $history->status === 'confirmed' ? '#3b82f6' : ($history->status === 'delivered' ? '#10b981' : '#f59e0b') }}; border-radius:50%; border:2px solid white;">
+                                            style="position:absolute; left:-14px; top:2px; width:12px; height:12px; background:{{ $history->status === 'confirmed' ? '#10b981' : ($history->status === 'delivered' ? '#3b82f6' : ($history->status === 'in_production' ? '#f59e0b' : '#6b7280')) }}; border-radius:50%; border:2px solid white; box-shadow:0 0 0 2px {{ $history->status === 'confirmed' ? '#10b981' : ($history->status === 'delivered' ? '#3b82f6' : ($history->status === 'in_production' ? '#f59e0b' : '#6b7280')) }};">
                                         </div>
-                                        <div>
-                                            <div
-                                                style="font-size:13px; font-weight:600; color:#1f2937; margin-bottom:2px;">
-                                                {{ ucfirst($history->status === 'confirmed' ? 'En cours' : ($history->status === 'delivered' ? 'Livré' : 'En attente')) }}
+                                        <div
+                                            style="background:{{ $history->status === 'confirmed' ? '#f0fdf4' : '#f9fafb' }}; padding:12px; border-radius:8px; border-left:3px solid {{ $history->status === 'confirmed' ? '#10b981' : '#e5e7eb' }};">
+                                            <div style="font-size:13px; font-weight:600; color:#1f2937;">
+                                                @php
+                                                    $statusLabels = [
+                                                        'pending' => '⏳ En attente',
+                                                        'confirmed' => '✅ Confirmée',
+                                                        'in_production' => '🏭 En production',
+                                                        'ready' => '📦 Prête',
+                                                        'delivering' => '🚚 En livraison',
+                                                        'delivered' => '✓✓ Livrée',
+                                                        'cancelled' => '✕ Annulée',
+                                                    ];
+                                                @endphp
+                                                {{ $statusLabels[$history->status] ?? ucfirst($history->status) }}
                                             </div>
-                                            <div style="font-size:12px; color:#6b7280;">
-                                                {{ $history->created_at->format('d/m/Y H:i') }}</div>
+                                            <div style="font-size:12px; color:#6b7280; margin-top:4px;">
+                                                {{ $history->changed_at->format('d/m/Y à H:i') }}
+                                                @if ($history->changedByUser)
+                                                    • par {{ $history->changedByUser->name }}
+                                                @endif
+                                            </div>
+                                            @if ($history->notes)
+                                                <div style="font-size:12px; color:#4b5563; margin-top:6px; italic;">
+                                                    {{ $history->notes }}
+                                                </div>
+                                            @endif
                                         </div>
                                     </div>
                                 @empty
                                     <div style="position:relative;">
                                         <div
-                                            style="position:absolute; left:-14px; top:2px; width:12px; height:12px; background:#10b981; border-radius:50%; border:2px solid white;">
+                                            style="position:absolute; left:-14px; top:2px; width:12px; height:12px; background:#10b981; border-radius:50%; border:2px solid white; box-shadow:0 0 0 2px #10b981;">
                                         </div>
-                                        <div>
+                                        <div
+                                            style="background:#f0fdf4; padding:12px; border-radius:8px; border-left:3px solid #10b981;">
                                             <div
-                                                style="font-size:13px; font-weight:600; color:#1f2937; margin-bottom:2px;">
-                                                Création</div>
+                                                style="font-size:13px; font-weight:600; color:#1f2937; margin-bottom:4px;">
+                                                📝 Commande créée</div>
                                             <div style="font-size:12px; color:#6b7280;">
-                                                {{ $order->created_at->format('d/m/Y H:i') }}</div>
+                                                {{ $order->created_at->format('d/m/Y à H:i') }}</div>
                                         </div>
                                     </div>
                                 @endforelse
@@ -410,4 +488,53 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal de Confirmation -->
+    @if ($order->status === 'pending' && auth()->user()?->user_type === 'admin')
+        <div id="confirmModal"
+            style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+            <div
+                style="background:white; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,0.3); max-width:500px; width:90%; padding:32px;">
+                <div style="margin-bottom:24px;">
+                    <div style="font-size:28px; margin-bottom:12px;">⚠️</div>
+                    <h2 style="font-size:24px; font-weight:700; color:#1f2937; margin:0 0 8px;">
+                        Confirmer la commande
+                    </h2>
+                    <p style="color:#6b7280; margin:0; font-size:15px;">
+                        Êtes-vous sûr de vouloir confirmer cette commande ? Cette action marquera le début de la production.
+                    </p>
+                </div>
+
+                <div
+                    style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:8px; padding:16px; margin-bottom:24px;">
+                    <div style="font-size:13px; color:#065f46; font-weight:600; margin-bottom:8px;">Détails de la
+                        confirmation:</div>
+                    <ul style="margin:0; padding-left:20px; font-size:13px; color:#059669;">
+                        <li style="margin-bottom:4px;">Commande: <strong>{{ $order->reference }}</strong></li>
+                        <li style="margin-bottom:4px;">Client: <strong>{{ $order->client->name }}</strong></li>
+                        <li style="margin-bottom:4px;">Montant:
+                            <strong>{{ number_format($order->total_amount, 0, ',', ' ') }} FCFA</strong></li>
+                        <li>Date: <strong>{{ now()->format('d/m/Y à H:i') }}</strong></li>
+                    </ul>
+                </div>
+
+                <div style="display:flex; gap:12px; justify-content:flex-end;">
+                    <button type="button" onclick="document.getElementById('confirmModal').style.display='none'"
+                        style="padding:10px 20px; background:#e5e7eb; color:#374151; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s;"
+                        onmouseover="this.style.background='#d1d5db'" onmouseout="this.style.background='#e5e7eb'">
+                        ❌ Annuler
+                    </button>
+                    <form action="{{ route('orders.confirm', $order->id) }}" method="POST" style="margin:0;">
+                        @csrf
+                        <button type="submit"
+                            style="padding:10px 20px; background:linear-gradient(135deg, #10b981, #059669); color:white; border:none; border-radius:8px; font-size:14px; font-weight:600; cursor:pointer; transition:all 0.2s; box-shadow:0 4px 12px rgba(16,185,129,0.3);"
+                            onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 16px rgba(16,185,129,0.4)'"
+                            onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(16,185,129,0.3)'">
+                            ✅ Confirmer
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection

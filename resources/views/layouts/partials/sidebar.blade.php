@@ -83,6 +83,8 @@
                 <span>Clients</span>
             </a>
 
+            {{-- Fonctionnalités non encore disponibles pour les admins --}}
+            {{--
             <!-- Production -->
             <a href="{{ route('production.calendar') }}"
                 class="sidebar-nav-item {{ request()->routeIs('production.*') ? 'active' : '' }}">
@@ -173,33 +175,7 @@
                 <span>SAV</span>
             </a>
 
-            <!-- Rapports -->
-            <a href="{{ route('reports.index') }}"
-                class="sidebar-nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
-                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-                <span>Rapports</span>
-            </a>
-
-            <!-- Notifications -->
-            <a href="{{ route('notifications.index') }}"
-                class="sidebar-nav-item {{ request()->routeIs('notifications.*') ? 'active' : '' }}">
-                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                </svg>
-                <span>Notifications</span>
-            </a>
-            <a href="{{ route('users.index') }}"
-                class="sidebar-nav-item {{ request()->routeIs('users.index') ? 'active' : '' }}">
-                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                </svg>
-                <span>Utilisateurs</span>
-            </a>
+      
 
             <!-- Paramètres -->
             <a href="{{ route('settings.index') }}"
@@ -211,6 +187,24 @@
                         d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <span>Paramètres</span>
+            </a>
+            --}}
+            <a href="{{ route('notifications.index') }}"
+                class="sidebar-nav-item {{ request()->routeIs('notifications.*') ? 'active' : '' }}">
+                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+                <span>Notifications</span>
+            </a>
+            <!-- Rapports -->
+            <a href="{{ route('reports.index') }}"
+                class="sidebar-nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
+                <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <span>Rapports</span>
             </a>
         @endif
 
@@ -275,25 +269,25 @@
             </a>
 
             <!-- Livraisons -->
-            <a href="{{ route('deliveries.index') }}"
+            {{-- <a href="{{ route('deliveries.index') }}"
                 class="sidebar-nav-item {{ request()->routeIs('deliveries.*') ? 'active' : '' }}">
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
                 </svg>
                 <span>Livraisons</span>
-            </a>
+            </a> --}}
 
 
             <!-- Rapports -->
-            <a href="{{ route('reports.index') }}"
+            {{-- <a href="{{ route('reports.index') }}"
                 class="sidebar-nav-item {{ request()->routeIs('reports.*') ? 'active' : '' }}">
                 <svg class="nav-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
                 <span>Rapports</span>
-            </a>
+            </a> --}}
 
             <!-- Notifications -->
             <a href="{{ route('notifications.index') }}"

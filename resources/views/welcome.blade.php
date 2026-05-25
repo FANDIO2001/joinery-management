@@ -769,8 +769,8 @@
                 <!-- Projet 1 -->
                 @foreach ($products as $product)
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-                        <img src="{{ asset('storage/' . ($product->images->where('is_primary', true)->first()?->image_path ?? $product->images->first()?->image_path ?? 'default.jpg')) }}" alt="{{ $product->name }}"
-                            class="w-full h-40 object-cover">
+                        <img src="{{ asset('storage/' . ($product->images->where('is_primary', true)->first()?->image_path ?? ($product->images->first()?->image_path ?? 'default.jpg'))) }}"
+                            alt="{{ $product->name }}" class="w-full h-40 object-cover">
                         <div class="p-4">
                             <h3 class="text-lg font-bold text-blue-900 mb-2">{{ $product->name }}</h3>
                             <p class="text-sm text-gray-600 mb-3">{{ $product->description }}</p>
@@ -779,7 +779,8 @@
                                     class="text-lg font-bold text-red-600">{{ number_format($product->base_price, 0, ',', ' ') }}
                                     FCFA</span>
                                 <a href="{{ route('shop.show', $product) }}"
-                                    class="bg-blue-600 text-white p-5 rounded-lg hover:bg-blue-700 transition-colors text-xl inline-block text-center">
+                                    class="bg-blue-600 text-white p-5 rounded-lg hover:bg-blue-700 transition-colors text-xl inline-block text-center"
+                                    style="text-decoration:none;padding:2px">
                                     Voir
                                 </a>
                             </div>
@@ -935,19 +936,19 @@
             </div>
 
             <div class="max-w-2xl mx-auto flex items-center justify-center">
-                
+
                 <form action="" method="POST" class="bg-white rounded-2xl shadow-xl p-8 md:p-12 w-full">
                     @csrf
-                    @if(session('success'))
+                    @if (session('success'))
                         <div class="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
                             {{ session('success') }}
                         </div>
                     @endif
 
-                    @if($errors->any())
+                    @if ($errors->any())
                         <div class="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
                             <ul class="list-disc list-inside">
-                                @foreach($errors->all() as $error)
+                                @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
@@ -956,7 +957,8 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Nom complet</label>
+                            <label for="name" class="block text-sm font-semibold text-gray-700 mb-2">Nom
+                                complet</label>
                             <input type="text" id="name" name="name" required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
                                 placeholder="Votre nom">

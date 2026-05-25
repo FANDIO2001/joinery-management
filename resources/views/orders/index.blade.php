@@ -4,15 +4,8 @@
 @section('subtitle', 'Gérer toutes les commandes clients')
 
 @php
-    $statusColors = [
-        'pending' => ['bg' => '#fef3c7', 'text' => '#d97706', 'dot' => '#f59e0b', 'label' => 'En attente'],
-        'confirmed' => ['bg' => '#dbeafe', 'text' => '#2563eb', 'dot' => '#3b82f6', 'label' => 'Confirmée'],
-        'in_production' => ['bg' => '#e0e7ff', 'text' => '#4338ca', 'dot' => '#6366f1', 'label' => 'En production'],
-        'ready' => ['bg' => '#cffafe', 'text' => '#0e7490', 'dot' => '#06b6d4', 'label' => 'Prête'],
-        'delivering' => ['bg' => '#fce7f3', 'text' => '#be185d', 'dot' => '#ec4899', 'label' => 'En livraison'],
-        'delivered' => ['bg' => '#d1fae5', 'text' => '#059669', 'dot' => '#10b981', 'label' => 'Livrée'],
-        'cancelled' => ['bg' => '#fee2e2', 'text' => '#dc2626', 'dot' => '#ef4444', 'label' => 'Annulée'],
-    ];
+    use App\Support\OrderStatus;
+    $statusColors = OrderStatus::labels();
 @endphp
 
 @section('content')
@@ -90,10 +83,17 @@
                                 style="padding:6px 12px; background:#3b82f6; color:white; border-radius:6px; font-size:12px; font-weight:500; text-decoration:none;">
                                 Voir
                             </a>
-                            <a href="{{ route('orders.edit', $order) }}"
-                                style="padding:6px 12px; background:#10b981; color:white; border-radius:6px; font-size:12px; font-weight:500; text-decoration:none;">
-                                Modifier
-                            </a>
+                            @if($order->status === 'pending_quote' && !$order->quote)
+                                <a href="{{ route('quotes.create', $order) }}"
+                                    style="padding:6px 12px; background:#f59e0b; color:white; border-radius:6px; font-size:12px; font-weight:500; text-decoration:none;">
+                                    Faire un devis
+                                </a>
+                            @elseif($order->quote)
+                                <a href="{{ route('quotes.show', $order->quote) }}"
+                                    style="padding:6px 12px; background:#8b5cf6; color:white; border-radius:6px; font-size:12px; font-weight:500; text-decoration:none;">
+                                    Voir devis
+                                </a>
+                            @endif
                         </div>
                     </div>
                 @empty

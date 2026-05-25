@@ -1,4 +1,4 @@
-﻿@extends('layouts.shop')
+@extends('layouts.shop')
 
 @section('title', $product->name)
 
@@ -576,7 +576,7 @@
                 </p>
 
                 <div class="product-rating">
-                    <span class="stars" aria-hidden="true">â˜…â˜…â˜…â˜…â˜…</span>
+                    <span class="stars" aria-hidden="true">★★★★★</span>
                     <a href="#reviews" class="reviews-link">{{ $product->views_count }} vue(s)</a>
                 </div>
 
@@ -584,7 +584,7 @@
                     @if($product->short_description)
                         <p><strong>{{ $product->short_description }}</strong></p>
                     @endif
-                    <p>{{ $product->description ?: 'DÃ©couvrez ce produit artisanal rÃ©alisÃ© par DOLLARS MENUISERIE. QualitÃ© premium, finitions soignÃ©es et fabrication sur mesure disponible.' }}</p>
+                    <p>{{ $product->description ?: 'Découvrez ce produit artisanal réalisé par DOLLARS MENUISERIE. Qualité premium, finitions soignées et fabrication sur mesure disponible.' }}</p>
                 </div>
 
                 <form action="{{ route('shop.cart.add') }}" method="POST">
@@ -632,7 +632,7 @@
                                             <input type="number" id="customHeight" name="custom_height" min="10" placeholder="Ex: 200" style="width: 100%; padding: 10px; border: 1px solid var(--shop-border); border-radius: 2px; font-size: 13px;">
                                         </div>
                                     </div>
-                                    <p style="font-size: 11px; color: var(--shop-text-muted); margin-top: 10px; font-style: italic;">Le prix final sera ajustÃ© en fonction des dimensions saisies.</p>
+                                    <p style="font-size: 11px; color: var(--shop-text-muted); margin-top: 10px; font-style: italic;">Le prix final sera ajusté en fonction des dimensions saisies.</p>
                                 </div>
                             @endif
 
@@ -645,7 +645,7 @@
                         @else
                             <a href="{{ route('login') }}" class="btn-cart" style="text-align: center; background: var(--shop-text-muted); border-color: var(--shop-text-muted); text-decoration: none; display: flex; align-items: center; justify-content: center;">CONNECTEZ-VOUS POUR AJOUTER</a>
                         @endauth
-                        <button type="button" class="btn-wishlist" onclick="alert('Liste de souhaits â€” bientÃ´t disponible')">
+                        <button type="button" class="btn-wishlist" onclick="alert('Liste de souhaits — bientôt disponible')">
                             AJOUTER AUX FAVORIS
                         </button>
                     </div>
@@ -654,23 +654,23 @@
                 <div class="delivery-box">
                     <h4>ESTIMATION DE LIVRAISON</h4>
                     <p style="font-size:13px;color:var(--shop-text);margin:0 0 8px;">
-                        DÃ©lai de fabrication estimÃ© :
+                        Délai de fabrication estimé :
                         <strong>{{ $product->min_fabrication_days }} jour(s)</strong>
                         @if($product->weight_kg)
-                            â€” Poids : {{ $product->weight_kg }} kg
+                            — Poids : {{ $product->weight_kg }} kg
                         @endif
                     </p>
-                    <a href="#">Conditions gÃ©nÃ©rales de vente</a>
+                    <a href="#">Conditions générales de vente</a>
                 </div>
             </div>
         </div>
     </div>
 
-    {{-- Onglets dÃ©tails --}}
+    {{-- Onglets détails --}}
     <section class="product-tabs-section">
         <div class="product-tabs" role="tablist">
             <button type="button" class="product-tab active" data-tab="detail" role="tab" aria-selected="true">
-                DÃ‰TAIL
+                DÉTAIL
             </button>
             <button type="button" class="product-tab" data-tab="size" role="tab" aria-selected="false">
                 DIMENSIONS
@@ -691,8 +691,8 @@
                         <td>{{ $product->sku }}</td>
                     </tr>
                     <tr>
-                        <td>CatÃ©gorie</td>
-                        <td>{{ $product->category?->name ?? 'â€”' }}</td>
+                        <td>Catégorie</td>
+                        <td>{{ $product->category?->name ?? '—' }}</td>
                     </tr>
                     <tr>
                         <td>Statut</td>
@@ -741,15 +741,15 @@
                     </tbody>
                 </table>
             @else
-                <p class="tab-text">Les dimensions dÃ©taillÃ©es de ce produit seront communiquÃ©es sur demande. Contactez-nous pour un devis sur mesure.</p>
+                <p class="tab-text">Les dimensions détaillées de ce produit seront communiquées sur demande. Contactez-nous pour un devis sur mesure.</p>
             @endif
         </div>
 
         <div id="tab-return" class="tab-panel" role="tabpanel">
             <p class="tab-text">
-                Les articles sur mesure ne sont pas Ã©ligibles au retour standard. Pour les produits du catalogue,
-                vous disposez de 14 jours aprÃ¨s rÃ©ception pour signaler tout dÃ©faut de fabrication.
-                Contactez notre service client avec votre numÃ©ro de commande.
+                Les articles sur mesure ne sont pas éligibles au retour standard. Pour les produits du catalogue,
+                vous disposez de 14 jours après réception pour signaler tout défaut de fabrication.
+                Contactez notre service client avec votre numéro de commande.
             </p>
         </div>
 
@@ -757,12 +757,12 @@
             <table class="detail-table">
                 <tbody>
                     <tr>
-                        <td>DÃ©lai de fabrication</td>
-                        <td>{{ $product->min_fabrication_days }} jour(s) ouvrÃ©(s) minimum</td>
+                        <td>Délai de fabrication</td>
+                        <td>{{ $product->min_fabrication_days }} jour(s) ouvré(s) minimum</td>
                     </tr>
                     <tr>
                         <td>Zone de livraison</td>
-                        <td>YaoundÃ©, Douala et environs â€” autres villes sur devis</td>
+                        <td>Yaoundé, Douala et environs — autres villes sur devis</td>
                     </tr>
                     <tr>
                         <td>Installation</td>

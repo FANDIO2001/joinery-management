@@ -122,16 +122,7 @@
                         <div style="font-size:14px; color:#374151; font-weight:600;">{{ number_format($order->total_amount, 0, ',', ' ') }} FCFA</div>
                         <div>
                             @php
-                                $statusColors = [
-                                    'pending' => ['bg' => '#fef3c7', 'text' => '#d97706', 'dot' => '#f59e0b', 'label' => 'En attente'],
-                                    'confirmed' => ['bg' => '#dbeafe', 'text' => '#2563eb', 'dot' => '#3b82f6', 'label' => 'Confirmée'],
-                                    'in_production' => ['bg' => '#e0e7ff', 'text' => '#4338ca', 'dot' => '#6366f1', 'label' => 'En production'],
-                                    'ready' => ['bg' => '#cffafe', 'text' => '#0e7490', 'dot' => '#06b6d4', 'label' => 'Prête'],
-                                    'delivering' => ['bg' => '#fce7f3', 'text' => '#be185d', 'dot' => '#ec4899', 'label' => 'En livraison'],
-                                    'delivered' => ['bg' => '#d1fae5', 'text' => '#059669', 'dot' => '#10b981', 'label' => 'Livrée'],
-                                    'cancelled' => ['bg' => '#fee2e2', 'text' => '#dc2626', 'dot' => '#ef4444', 'label' => 'Annulée'],
-                                ];
-                                $status = $statusColors[$order->status] ?? $statusColors['pending'];
+                                $status = \App\Support\OrderStatus::meta($order->status);
                             @endphp
                             <span
                                 style="display:inline-flex; align-items:center; gap:6px; padding:4px 12px; background:{{ $status['bg'] }}; color:{{ $status['text'] }}; font-size:12px; font-weight:600; border-radius:20px;">

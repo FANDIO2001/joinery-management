@@ -14,7 +14,7 @@ class OrderController extends Controller
         $user = auth()->user();
 
         $query = Order::query()
-            ->with(['client', 'items.product', 'address'])
+            ->with(['client', 'items.product', 'address', 'quote'])
             ->latest();
 
         if ($user && $user->user_type === 'client') {
@@ -62,7 +62,7 @@ class OrderController extends Controller
 
     public function show($id): View
     {
-        $order = Order::with(['items.product', 'address', 'client', 'statusHistory'])->findOrFail($id);
+        $order = Order::with(['items.product', 'address', 'client', 'quote', 'statusHistory'])->findOrFail($id);
 
         if (auth()->user()?->user_type === 'client' && $order->client_id !== auth()->id()) {
             abort(403);
@@ -118,6 +118,41 @@ class OrderController extends Controller
 
         return redirect()->route('orders.show', $order->id)
             ->with('success', 'Facture générée avec succès. Numéro: ' . $invoice->invoice_number);
+    }
+
+    public function confirmOrder($id): RedirectResponse
+    {
+        $order = Order::findOrFail($id);
+
+        // Seul l'admin peut confirmer une commande
+        if (auth()->user()?->user_type !== 'admin') {
+            abort(403, 'Seul un administrateur peut confirmer une commande.');
+        }
+
+        // Vérifier que la commande est en attente de confirmation
+        if ($order->status !== 'pending') {
+            return redirect()->route('orders.show', $order->id)
+                ->with('error', 'Cette commande ne peut pas être confirmée (statut actuel: ' . $order->status . ').');
+        }
+
+        // Confirmer la commande
+        $order->update([
+            'status' => 'confirmed',
+            'confirmed_at' => now(),
+        ]);
+
+        // Enregistrer dans l'historique des statuts s'il existe une table
+        if (method_exists($order, 'statusHistory')) {
+            $order->statusHistory()->create([
+                'status' => 'confirmed',
+                'changed_by' => auth()->id(),
+                'changed_at' => now(),
+                'notes' => 'Commande confirmée par l\'administrateur',
+            ]);
+        }
+
+        return redirect()->route('orders.show', $order->id)
+            ->with('success', 'Commande confirmée avec succès ! Date de production: ' . $order->confirmed_at->format('d/m/Y'));
     }
 
     public function sendConfirmation($id): RedirectResponse

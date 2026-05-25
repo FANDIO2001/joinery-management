@@ -71,7 +71,10 @@ class InvoiceController extends Controller
 
     public function pdf($id)
     {
-        // Generate PDF
-        return view('invoices.pdf');
+        $invoice = Invoice::with(['order.client', 'order.items.product', 'order.address'])->findOrFail($id);
+
+        $pdf = app('dompdf.wrapper')->loadView('invoices.pdf', compact('invoice'));
+        
+        return $pdf->download('facture-' . $invoice->invoice_number . '.pdf');
     }
 }

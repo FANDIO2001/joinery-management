@@ -11,7 +11,7 @@ class CustomerOrderController extends Controller
     public function index(Request $request): View
     {
         $query = Order::query()
-            ->with(['items.product', 'address', 'client'])
+            ->with(['items.product.images', 'address', 'quote'])
             ->where('client_id', auth()->id())
             ->latest();
 
@@ -31,7 +31,7 @@ class CustomerOrderController extends Controller
 
     public function show($id): View
     {
-        $order = Order::with(['items.product', 'address'])
+        $order = Order::with(['items.product.images', 'address', 'quote'])
             ->where('client_id', auth()->id())
             ->findOrFail($id);
 
